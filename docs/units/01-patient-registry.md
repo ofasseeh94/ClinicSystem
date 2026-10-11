@@ -61,7 +61,7 @@ Use a pre-change backup and tested restore plan before a real deployment; none h
 
 ## Verification evidence
 
-19 Python tests pass on local PostgreSQL 17.11; TypeScript and Vite build pass; Ruff and structure checks pass.
+20 Python tests pass on local PostgreSQL 17.11; TypeScript and Vite build pass; Ruff and structure checks pass.
 One Playwright workflow passes against live API/web servers and captures desktop/mobile screenshots.
 Tests cover synthetic siblings, duplicate review, uncertain DOB, allergy states, Arabic/English/alias search,
 masked phones, invalid forms with atomic rollback, concurrent retries, ETag conflicts, schema drift,

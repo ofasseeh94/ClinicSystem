@@ -6,7 +6,7 @@ Resolved Drive dependency issues with a local NTFS runtime and tested actual Pos
 Added normalized registry migrations, staff auth/role checks, masked Arabic/English search, transactional
 registration, duplicate review, idempotent retries, audited ETag corrections, explicit allergy states,
 immutable versioned background forms and a responsive patient overview. Added generated API contracts,
-19 Python tests, a browser acceptance flow, desktop/mobile screenshots, locked dependencies, launch/sync
+20 Python tests, a browser acceptance flow, desktop/mobile screenshots, locked dependencies, launch/sync
 scripts, PostgreSQL-backed CI and complete maintenance documentation. No clinical algorithms or production
 release; live identity, privacy, operations and clinical gates remain open.
 

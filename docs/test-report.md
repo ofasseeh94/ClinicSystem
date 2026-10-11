@@ -6,13 +6,13 @@
 | --- | --- |
 | Repository structure | PASS |
 | Ruff (API, scripts and Python tests) | PASS |
-| Pytest unit/integration/security/contract suite | PASS: 19 tests, using actual PostgreSQL 17.11 |
+| Pytest unit/integration/security/contract suite | PASS: 20 tests, using actual PostgreSQL 17.11 |
 | TypeScript `tsc --noEmit` | PASS |
 | Vite production bundle | PASS |
 | Playwright browser acceptance | PASS: one end-to-end flow, desktop and mobile screenshots |
 | Migrations | PASS: checksum verification, repeated application and immutable v1/v2 history |
 | Local readiness and development start/stop | PASS; PostgreSQL on 55432, API on 8000, web on 5173 |
-| Remote GitHub Actions | Pending publication/status verification |
+| Remote GitHub Actions | Initial backend/build checks passed; browser launch argument forwarding corrected; follow-up run pending |
 | Docker Compose startup | NOT RUN: Docker unavailable locally; PostgreSQL binaries used instead |
 | Production/clinical acceptance and backup restore | NOT RUN; no production readiness claimed |
 

@@ -180,8 +180,8 @@ Date: 2026-10-11. Outcome: TESTED for synthetic development.
 
 ### Verification, revisiting and limits
 
-19 Python tests pass; Ruff/structure and TypeScript/Vite build pass; the real browser workflow passes.
-Desktop/mobile screenshots were inspected. Initial browser-test failures exposed a test selector issue
+20 Python tests pass; Ruff/structure and TypeScript/Vite build pass; the real browser workflow passes.
+Desktop/mobile screenshots were inspected. Added a regression check rejecting nonfinite numeric background input. Initial browser-test failures exposed a test selector issue
 and duplicate synthetic names on reruns; the fixture now uses distinct names and tests the duplicate path deliberately.
 Tests also caught a phone-mask text encoding error, which was fixed while preserving original patient names.
 
@@ -190,6 +190,11 @@ modification map; [test report](test-report.md) for environment/results; [ADR-00
 for persistence/search/auth/history choices. The two migrations are now applied locally and must never be rewritten.
 Changes require additive migrations/form versions; destructive rollback is not provided. Production restore drills,
 restricted DB roles, external audit integrity, distributed limits, managed sign-in and clinical/privacy sign-offs remain open.
+
+Publication: [initial Unit 01 commit](https://github.com/ofasseeh94/ClinicSystem/commit/1c21c1f79a83acfb3bad7693744d2131e016a22b).
+The first remote CI run passed build/backend checks but its browser step failed because nested npm scripts
+forwarded the port argument as a Vite directory. CI now launches Vite directly with the intended root/port;
+its follow-up run is recorded in the validation report.
 
 Next planned unit: encounters, signed note lifecycle/addenda and dated measurements. No prescribing,
 growth/vaccine recommendations, documents, parent messaging or AI was added in this unit.

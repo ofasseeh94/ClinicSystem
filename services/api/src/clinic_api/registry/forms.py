@@ -1,4 +1,5 @@
 from decimal import Decimal
+from math import isfinite
 
 from ..errors import Problem
 from .schemas import FormSubmission
@@ -34,6 +35,8 @@ def validate_submission(conn, submission: FormSubmission):
             valid = isinstance(value, str) and len(value) <= field.get("max_length", 2000)
         elif kind in {"integer", "number"}:
             valid = type(value) in ({int} if kind == "integer" else {int, float})
+            if valid and isinstance(value, float):
+                valid = isfinite(value)
             if valid:
                 valid = (
                     Decimal(str(field["min"])) <= Decimal(str(value)) <= Decimal(str(field["max"]))

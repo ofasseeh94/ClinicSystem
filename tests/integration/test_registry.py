@@ -1,4 +1,5 @@
 import hashlib
+import json
 from concurrent.futures import ThreadPoolExecutor
 from uuid import uuid4
 
@@ -228,3 +229,24 @@ def test_migrations_repeat_and_detect_drift(database_url, tmp_path):
     )
     with pytest.raises(ValueError, match="Applied migration changed"):
         apply_migrations(database_url, tmp_path)
+
+
+def test_nonfinite_form_numbers_are_rejected(registry, headers, patient_data):
+    client, _ = registry
+    for value in (float("nan"), float("inf")):
+        payload = {
+            **patient_data,
+            "background": {
+                "form_key": "background",
+                "version": 2,
+                "answers": {"birth.weight_kg": value},
+            },
+        }
+        response = client.post(
+            "/v1/patients",
+            headers={**headers, "Content-Type": "application/json"},
+            content=json.dumps(payload),
+            follow_redirects=False,
+        )
+        assert response.status_code == 422
+        assert response.json()["title"] == "invalid_form"
