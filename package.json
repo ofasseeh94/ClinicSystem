@@ -1,0 +1,13 @@
+{
+  "name": "pediatric-clinic",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace @clinic/web",
+    "typecheck": "npm run typecheck --workspace @clinic/web",
+    "build": "npm run build --workspace @clinic/web"
+  }
+}

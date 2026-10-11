@@ -1,0 +1,22 @@
+openapi: 3.1.0
+info:
+  title: Pediatric Clinic API
+  version: 0.0.1
+paths:
+  /health:
+    get:
+      summary: Process health only; does not check dependencies
+      operationId: health
+      responses:
+        '200':
+          description: API process is running
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [status]
+                properties:
+                  status:
+                    type: string
+                    const: ok
