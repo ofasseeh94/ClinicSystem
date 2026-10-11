@@ -10,8 +10,8 @@ Last updated: 2026-10-11 (clinic timezone: Africa/Cairo).
 Repository: local Git repository at `G:/My Drive/Work/Pediatrics/ClinicSystem-AI`.
 Remote repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem), public.
 The initial source/documentation upload completed; `main` tracks `origin/main`. See Step 004.
-Current milestone: M1 / Unit 01 registry tested with synthetic data. M0 local build blockers resolved.
-Patient registration is implemented; encounters and other clinical modules remain planned. Production gates remain open.
+Current milestone: M2 / Unit 02 encounters tested with synthetic data. M0 local build blockers resolved.
+Registry, encounters and raw dated measurements are implemented. Later clinical modules and production gates remain open.
 
 ## Step 001 — Establish the repository foundation
 
@@ -201,6 +201,63 @@ records these results; see the validation report.
 
 Next planned unit: encounters, signed note lifecycle/addenda and dated measurements. No prescribing,
 growth/vaccine recommendations, documents, parent messaging or AI was added in this unit.
+
+## Step 007 — Build Unit 02: encounters, signatures and dated measurements
+
+Date: 2026-10-11. Outcome: TESTED for synthetic development; extends Step 006.
+
+### Purpose and implementation sequence
+
+1. Read the existing journal, architecture/data dictionary and M2 design to preserve registry IDs,
+   historical forms, clinic isolation and atomic audit. Selected encounters as the next planned unit.
+2. Added migration 003 for versioned encounter snapshots and separate signed addenda. PostgreSQL
+   triggers prevent final-record editing/deletion and addenda editing/deletion; unsigned parents reject addenda.
+3. Added validated backend schemas, clinic-scoped transaction/query services and endpoints for create,
+   timeline/read, draft replacement, status transitions and addenda. Reused authenticated actors and audit.
+4. Added mandatory version/If-Match checks, UUID creation/addendum replay and transaction locks.
+   Draft changes retain before/after audit snapshots. Signing requires complete narrative/review acknowledgment.
+5. Captured DOB precision/source/patient version at visit creation and calculated age on the Cairo visit
+   date. Later profile corrections preserve this context; uncertain dates suppress exact age.
+6. Added dated raw kg/cm measurements with source/position/technique/equipment, finite positive validation
+   and displayed age at measurement from saved birth context. No medical reference calculations added.
+7. Built the patient Encounters tab: paginated timeline, note/measurement editor, review/sign/cancel,
+   immutable read view and signed addendum. Added deliberate discard/reload and unsaved navigation warnings.
+8. Regenerated API contracts; added PostgreSQL lifecycle/security/concurrency/date/immutability tests and
+   a desktop/mobile browser acceptance flow. Updated the documentation and complete maintenance manifest.
+
+### Exact changes and modification guide
+
+The complete changed-file manifest, ownership map and design/recovery explanation are in
+[Unit 02](units/02-encounters.md). Change validations in encounter schemas, transitions/transactions
+in the service, endpoint behavior in routes, permissions in auth, and entry/navigation behavior in
+Encounters/PatientOverview/App. Keep shared types, generated contracts, tests and docs synchronized.
+The design rationale is [ADR-003](architecture/adr/003-encounter-lifecycle.md); staff steps are in
+[the encounter workflow](workflows/encounters.md).
+
+### Verification and resolved findings
+
+29 Python tests pass against actual PostgreSQL 17.11; Ruff, structure, TypeScript and production
+bundle checks pass. Both Playwright workflows pass (registry and encounter), including saving raw
+measurements, signing, addendum preservation and reopening. Desktop/mobile screenshots inspected.
+Tests caught and resolved timezone formatting differences in replay responses, review-selector labels,
+and a save-completion race that could reset a newly entered reason. Inputs now pause while saving.
+The browser test uses accessible textbox roles for disabled note fields. The upstream TestClient
+deprecation warning remains; no production/clinical/backup-restore validation performed.
+
+### Data impact, limits and next prerequisites
+
+Migration 003 is additive and applied to local development and test databases. Registry rows and
+forms remain intact. Do not rewrite applied SQL; use later migrations. No destructive down migration
+exists. Stop writes and use a verified restore procedure if recovery is required; restore remains untested.
+Draft note/measurement versions live in immutable audit snapshots, rather than a dedicated history UI.
+Addenda preserve the signed parent's version and append text corrections; structured measurement corrections
+are deferred. Technical input limits are not clinically approved plausibility rules. Consent text does
+not verify authority, and signing is staff attestation without cryptographic document signatures.
+Managed identity/MFA, production security/operations and clinical/privacy sign-off remain open.
+
+Next planned unit: private documents/investigations foundation (M3), with storage and upload protections
+defined before handling attachments. Clinical engines still require source-verified reference data.
+Publication/remote verification results are recorded in the validation report after push.
 
 ## Template for every future build step
 

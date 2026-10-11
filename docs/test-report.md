@@ -1,5 +1,26 @@
 # Validation report
 
+## 2026-10-11 — Unit 02 encounters
+
+| Check | Result |
+| --- | --- |
+| Pytest | PASS: 29 tests using PostgreSQL 17.11, including 9 new encounter/measurement cases |
+| Ruff and repository structure | PASS |
+| TypeScript and Vite bundle | PASS |
+| Playwright | PASS: both registry and encounter workflows |
+| Migration 003 / readiness | PASS: applied locally to development/test DBs; earlier checksums preserved |
+| Desktop/mobile encounter screenshots | Inspected; synthetic records only |
+| Remote Actions | Pending publication verification; recorded below when available |
+| Production, clinical acceptance, backup restore | NOT RUN |
+
+Used the same local Python/Node/PostgreSQL environment and commands as Unit 01 below. New tests
+exercise complete lifecycle and addenda, immutable SQL guards, stale/missing versions, review locking,
+role/clinic isolation, unknown DOB, preserved birth context after correction, invalid/future dates,
+nonfinite/nonpositive measurements, Cairo date boundary and concurrent edits/creation retries.
+Browser acceptance enters notes/measurements, reviews/signs, appends a correction and reopens on mobile.
+Initial failures were resolved: consistent UTC retry timestamps, accessible selector labels, a reason
+input race while saving and the test locator for disabled fields. Upstream TestClient warning remains.
+
 ## 2026-10-11 — Unit 01 registry
 
 | Check | Result |

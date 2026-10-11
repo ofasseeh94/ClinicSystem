@@ -3,10 +3,11 @@
 Repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem).
 [Design baseline](docs/design/README.md) · [Documentation index](docs/00-index.md) · [Build journal](docs/build-journal.md)
 
-Unit 01: a PostgreSQL-backed patient registry for **synthetic development data**.
+Units 01–02: a PostgreSQL-backed registry and encounter record for **synthetic development data**.
 Register patients and guardians, search Arabic/English names and aliases, review duplicate candidates,
 reopen an overview, correct identity details with a reason, and append versioned medical/birth background.
-Unknown allergy history remains explicit. Clinical modules are planned, not implemented.
+Unknown allergy history remains explicit. Open Encounters for dated visits, notes, raw measurements,
+review/signing, cancellation and immutable signed addenda. Later clinical modules remain planned.
 This is not a production medical record system; managed sign-in, security and clinical release gates remain open.
 
 ## Repository map
@@ -63,6 +64,7 @@ Do not copy `.env` or generated dependency folders into Git. The repository is p
 
 CI provisions PostgreSQL and runs the same checks plus browser acceptance. Screenshots use fictional records.
 See [test report](docs/test-report.md), [Unit 01 guide](docs/units/01-patient-registry.md) and [screenshots](docs/screenshots/README.md).
+The [Unit 02 guide](docs/units/02-encounters.md) explains encounter use, storage, edits and recovery.
 
 ## Production prerequisites
 

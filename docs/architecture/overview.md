@@ -23,6 +23,9 @@ and forbids development credentials. Live IdP integration and browser OIDC login
 Search inputs are sent in POST bodies; no analytics, external fonts or AI calls are configured.
 Tokens live only in browser memory. Server errors omit supplied input values; configuration repr hides credentials.
 
-Private documents, encounters, clinical rules, notifications, parent access and AI remain planned.
+Unit 02 adds clinic-scoped dated encounters, structured narrative notes, raw measurements,
+review/signing/cancellation and immutable signed addenda. Draft revisions are preserved in audit
+snapshots; signed rows are protected by PostgreSQL triggers. See ADR-003 and the Unit 02 guide.
+Private documents, clinical rules, notifications, parent access and AI remain planned.
 No prescribing, growth reference calculations or vaccination recommendations exist. TLS/encryption,
 restricted DB role, external audit integrity, backup/restore, privacy review and clinical sign-off remain release gates.

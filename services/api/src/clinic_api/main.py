@@ -13,6 +13,7 @@ from starlette.exceptions import HTTPException
 
 from .config import Settings
 from .database import connect
+from .encounters.routes import router as encounters_router
 from .errors import Problem, problem_response
 from .registry.routes import router
 
@@ -127,7 +128,7 @@ def create_app(settings: Settings | None = None):
                 from psycopg.errors import UndefinedTable
 
                 count = conn.execute("SELECT count(*) AS n FROM schema_migrations").fetchone()["n"]
-                if count < 2:
+                if count < 3:
                     raise Problem(503, "migration_required", "Registry migrations must be applied.")
             except UndefinedTable:
                 raise Problem(
@@ -143,6 +144,7 @@ def create_app(settings: Settings | None = None):
         )
 
     app.include_router(router)
+    app.include_router(encounters_router)
     default_openapi = app.openapi
 
     def documented_schema():

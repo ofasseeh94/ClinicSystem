@@ -24,6 +24,9 @@ ROLE_PERMISSIONS = {
         "audit:read",
     },
 }
+ROLE_PERMISSIONS["registrar"].add("encounter:read")
+for clinical_role in ("clinician", "admin"):
+    ROLE_PERMISSIONS[clinical_role].update({"encounter:read", "encounter:write"})
 
 
 @dataclass(frozen=True)

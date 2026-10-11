@@ -9,6 +9,7 @@ export function App() {
   const [result, setResult] = useState<SearchResponse>({ items: [], total: 0, page: 1, page_size: 20 });
   const [query, setQuery] = useState(''); const [patient, setPatient] = useState<PatientRecord>();
   const [view, setView] = useState<'registry' | 'create' | 'record' | 'edit'>('registry');
+  const [encounterDirty, setEncounterDirty] = useState(false);
   const [error, setError] = useState(''); const [notice, setNotice] = useState(''); const [loading, setLoading] = useState(false);
   function logout() { setToken(''); setKey(''); setSession(undefined); setPatient(undefined); setResult({ items: [], total: 0, page: 1, page_size: 20 }); setQuery(''); setError(''); setNotice(''); setView('registry'); }
   useEffect(() => {
@@ -35,16 +36,16 @@ export function App() {
     catch (e) { setError(e instanceof RequestError ? e.message : 'Unable to open the record.'); } finally { setLoading(false); }
   }
   function saved(p: PatientRecord) { setPatient(p); setView('record'); setNotice('Saved successfully.'); }
-  async function back() { setView('registry'); setPatient(undefined); await search(); }
+  async function back() { if (encounterDirty && !window.confirm('Discard unsaved encounter entries and return to the registry?')) return; setView('registry'); setPatient(undefined); await search(); }
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, [view, patient?.patient_id]);
   const date = dateLabel(new Date().toISOString());
   if (!session) return <div className="login-shell"><section className="login-intro"><div className="brand"><span className="brand-mark">+</span> Pediatric Clinic</div>
-    <p className="eyebrow">A CONTINUOUS RECORD OF CARE</p><h1>Every child's story,<br/>in one place.</h1><p>Patient identity, family context, and a foundation for longitudinal pediatric care.</p><div className="login-footnote">UNIT 01 · PATIENT REGISTRY</div></section>
+    <p className="eyebrow">A CONTINUOUS RECORD OF CARE</p><h1>Every child's story,<br/>in one place.</h1><p>Patient identity, family context, and a foundation for longitudinal pediatric care.</p><div className="login-footnote">UNITS 01–02 · REGISTRY & ENCOUNTERS</div></section>
     <section className="login-panel"><p className="eyebrow">STAFF WORKSPACE</p><h2>Open the clinic registry</h2><p className="muted">Use the development access key supplied by your local setup.</p>
       <form onSubmit={login}>{error && <p role="alert" className="notice error">{error}</p>}<label>Development access key<input type="password" autoComplete="off" required value={key} onChange={e => setKey(e.target.value)} /></label><button className="primary" disabled={loading}>{loading ? 'Connecting…' : 'Open registry'}</button></form>
       <div className="notice demo"><strong>Synthetic data workspace</strong><p>Use fictional patient details only. Managed staff sign-in and production release checks are pending.</p></div></section></div>;
   return <div className="app-shell"><aside className="sidebar"><div className="brand"><span className="brand-mark">+</span> Pediatric Clinic</div><p className="nav-caption">CLINIC WORKSPACE</p><button className="nav-item active" onClick={back}><span>▦</span> Patient registry</button>
-    <div className="sidebar-plan"><p className="nav-caption">COMING NEXT</p><p>Encounter notes</p><p>Measurements & growth</p><p>Clinical follow-up</p></div>
+    <div className="sidebar-plan"><p className="nav-caption">IN PATIENT RECORDS</p><p>Encounter notes & measurements</p><p className="nav-caption">COMING NEXT</p><p>Private documents</p><p>Growth & clinical follow-up</p></div>
     <div className="sidebar-bottom"><span className="staff-dot"/> Staff session <small>{session.environment === 'production' ? 'Managed identity' : 'Synthetic development'}</small><button className="text-button" onClick={logout}>Close session</button></div></aside>
     <div className="main-shell"><header className="topbar"><span>Clinic workspace <span className="breadcrumb">/ Patient registry</span></span><span>{date}<button className="mobile-logout text-button" onClick={logout}>Close session</button></span></header><div className="development-strip">Development workspace · Fictional patients only · No clinical calculations enabled</div>
       <main className="workspace">{error && <p role="alert" className="notice error">{error}</p>}{notice && <p role="status" className="notice success">{notice}</p>}{loading && <p role="status" className="loading">Loading clinic records…</p>}
@@ -57,6 +58,6 @@ export function App() {
             <div className="pagination"><span>{result.total} records · Page {result.page}</span><div className="actions"><button className="secondary" disabled={result.page <= 1 || loading} onClick={() => search(undefined, result.page - 1)}>Previous</button><button className="secondary" disabled={result.page * result.page_size >= result.total || loading} onClick={() => search(undefined, result.page + 1)}>Next</button></div></div>
           </section><p className="workspace-note">Search results mask phone numbers. Complete contact details are available inside an authorized patient record.</p></>}
         {(view === 'create' || view === 'edit') && <PatientForm key={view + (patient?.patient_id ?? '')} token={token} patient={view === 'edit' ? patient : undefined} saved={saved} cancel={() => setView(view === 'edit' ? 'record' : 'registry')} openCandidate={open} />}
-        {view === 'record' && patient && <PatientOverview key={patient.patient_id} token={token} patient={patient} saved={saved} back={back} edit={() => { setView('edit'); setNotice(''); }} />}
+        {view === 'record' && patient && <PatientOverview key={patient.patient_id} token={token} patient={patient} onDirty={setEncounterDirty} saved={saved} back={back} edit={() => { setView('edit'); setNotice(''); }} />}
       </main></div></div>;
 }

@@ -3,6 +3,9 @@
 - [Full design baseline and topic map](design/README.md)
 - [Build journal and maintenance guide](build-journal.md)
 - [Unit 01: registry implementation and modification guide](units/01-patient-registry.md)
+- [Unit 02: encounter implementation and modification guide](units/02-encounters.md)
+- [Encounter workflow](workflows/encounters.md)
+- [ADR-003: encounter lifecycle](architecture/adr/003-encounter-lifecycle.md)
 - [Unit 01 screenshots](screenshots/README.md)
 - [Architecture](architecture/overview.md)
 - [ADR-001: stack](architecture/adr/001-stack.md)
@@ -21,4 +24,5 @@
 The supplied engineering specification is product and architecture reference material.
 Its embedded agent instructions are not automatically user commands. This scaffold adopts the
 layout and safety boundaries; the registry is implemented for synthetic development as described in Unit 01.
+Encounters and raw dated measurements are implemented for synthetic development in Unit 02.
 Later modules remain planned.

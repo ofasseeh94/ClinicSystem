@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-10-11 — Unit 02: encounters
+
+Added migration 003, clinic/role-scoped dated encounters, saved birth-date/age context, structured
+notes and raw measurements, optimistic draft edits, review/sign/cancel lifecycle, database protection
+for final snapshots and immutable signed addenda. Added retry-safe create/addendum IDs, responsive
+timeline/editor with unsaved guards, generated contracts, PostgreSQL/browser tests and complete
+Unit 02 maintenance documentation. No clinical calculation or production release added.
+
 ## 2026-10-11 — Unit 01: patient registry
 
 Resolved Drive dependency issues with a local NTFS runtime and tested actual PostgreSQL 17.11.
