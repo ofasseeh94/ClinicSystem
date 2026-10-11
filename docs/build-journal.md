@@ -194,7 +194,10 @@ restricted DB roles, external audit integrity, distributed limits, managed sign-
 Publication: [initial Unit 01 commit](https://github.com/ofasseeh94/ClinicSystem/commit/1c21c1f79a83acfb3bad7693744d2131e016a22b).
 The first remote CI run passed build/backend checks but its browser step failed because nested npm scripts
 forwarded the port argument as a Vite directory. CI now launches Vite directly with the intended root/port;
-its follow-up run is recorded in the validation report.
+the [follow-up run](https://github.com/ofasseeh94/ClinicSystem/actions/runs/38123538692) passed completely for
+[commit ef6379f](https://github.com/ofasseeh94/ClinicSystem/commit/ef6379ffa3ea117a0c99318c7288db8881d6606d).
+The local project and GitHub main were verified to match after publication. A documentation-only follow-up
+records these results; see the validation report.
 
 Next planned unit: encounters, signed note lifecycle/addenda and dated measurements. No prescribing,
 growth/vaccine recommendations, documents, parent messaging or AI was added in this unit.

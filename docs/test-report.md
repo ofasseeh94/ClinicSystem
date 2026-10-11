@@ -12,14 +12,14 @@
 | Playwright browser acceptance | PASS: one end-to-end flow, desktop and mobile screenshots |
 | Migrations | PASS: checksum verification, repeated application and immutable v1/v2 history |
 | Local readiness and development start/stop | PASS; PostgreSQL on 55432, API on 8000, web on 5173 |
-| Remote GitHub Actions | Initial backend/build checks passed; browser launch argument forwarding corrected; follow-up run pending |
+| Remote GitHub Actions | PASS: [registry run 38123538692](https://github.com/ofasseeh94/ClinicSystem/actions/runs/38123538692), including PostgreSQL, build and browser acceptance |
 | Docker Compose startup | NOT RUN: Docker unavailable locally; PostgreSQL binaries used instead |
 | Production/clinical acceptance and backup restore | NOT RUN; no production readiness claimed |
 
 Commands: `python scripts/check_structure.py`; `python -m ruff check --config services/api/pyproject.toml services/api scripts tests`;
 `python -m pytest -q --tb=short` with TEST_DATABASE_URL; `npm run typecheck`; `npm run build`;
 `npx playwright test` with DEV_AUTH_TOKEN and live synthetic servers. Dependencies run from local NTFS.
-Python 3.14.4 and Node 24.15.0 were used locally; CI is configured for Python 3.12 / Node 22.
+Python 3.14.4 and Node 24.15.0 were used locally; the successful remote CI exercised Python 3.12 / Node 22.
 One upstream FastAPI/Starlette TestClient deprecation warning is present with pinned httpx; tests pass.
 
 Screenshots: [registry](screenshots/unit-01-registry.png), [overview](screenshots/unit-01-overview.png),

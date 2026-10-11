@@ -8,7 +8,8 @@ registration, duplicate review, idempotent retries, audited ETag corrections, ex
 immutable versioned background forms and a responsive patient overview. Added generated API contracts,
 20 Python tests, a browser acceptance flow, desktop/mobile screenshots, locked dependencies, launch/sync
 scripts, PostgreSQL-backed CI and complete maintenance documentation. No clinical algorithms or production
-release; live identity, privacy, operations and clinical gates remain open.
+release; live identity, privacy, operations and clinical gates remain open. The corrected remote
+registry CI run passed PostgreSQL, build and browser checks; the validation report links the evidence.
 
 ## 2026-10-10 — M0 foundation
 
