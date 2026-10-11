@@ -257,7 +257,11 @@ Managed identity/MFA, production security/operations and clinical/privacy sign-o
 
 Next planned unit: private documents/investigations foundation (M3), with storage and upload protections
 defined before handling attachments. Clinical engines still require source-verified reference data.
+Publication: [Unit 02 implementation commit 25bc78e](https://github.com/ofasseeh94/ClinicSystem/commit/25bc78e7f179d53a864d13fb28118ff24d777c8b).
 Publication/remote verification results are recorded in the validation report after push.
+The initial remote run passed build/lint and 28 tests but failed generated-contract equality because
+Python 3.12 and 3.14 use different default HTTP 422 descriptions. Added explicit encounter error
+descriptions and regenerated contracts; strict contract checking remains enabled.
 
 ## Template for every future build step
 

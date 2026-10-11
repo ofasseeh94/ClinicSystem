@@ -1,6 +1,6 @@
-# Registry data dictionary — Unit 01
+# Registry and encounter data dictionary — Units 01–02
 
-Source of truth: PostgreSQL migrations [001](../../db/migrations/001_registry.sql) and [002](../../db/migrations/002_background_v2.sql).
+Source of truth: PostgreSQL migrations [001](../../db/migrations/001_registry.sql), [002](../../db/migrations/002_background_v2.sql) and [003](../../db/migrations/003_encounters.sql).
 All patient-domain tables carry `clinic_id`; composite foreign keys prevent cross-clinic links.
 UUID record IDs are server generated. Timestamps are UTC `timestamptz`, rendered in Africa/Cairo.
 

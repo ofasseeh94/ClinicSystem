@@ -1228,94 +1228,94 @@
             }
           },
           "400": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Bad Request"
+            }
           },
           "401": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unauthorized"
+            }
           },
           "403": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Forbidden"
+            }
           },
           "404": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Not Found"
+            }
           },
           "409": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Conflict"
+            }
           },
           "412": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Failed"
+            }
           },
           "422": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unprocessable Content"
+            }
           },
           "428": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Required"
+            }
           },
           "503": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Service Unavailable"
+            }
           }
         }
       },
@@ -1360,94 +1360,94 @@
             }
           },
           "400": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Bad Request"
+            }
           },
           "401": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unauthorized"
+            }
           },
           "403": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Forbidden"
+            }
           },
           "404": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Not Found"
+            }
           },
           "409": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Conflict"
+            }
           },
           "412": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Failed"
+            }
           },
           "422": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unprocessable Content"
+            }
           },
           "428": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Required"
+            }
           },
           "503": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Service Unavailable"
+            }
           }
         }
       }
@@ -1493,94 +1493,94 @@
             }
           },
           "400": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Bad Request"
+            }
           },
           "401": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unauthorized"
+            }
           },
           "403": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Forbidden"
+            }
           },
           "404": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Not Found"
+            }
           },
           "409": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Conflict"
+            }
           },
           "412": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Failed"
+            }
           },
           "422": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unprocessable Content"
+            }
           },
           "428": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Required"
+            }
           },
           "503": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Service Unavailable"
+            }
           }
         }
       },
@@ -1650,94 +1650,94 @@
             }
           },
           "400": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Bad Request"
+            }
           },
           "401": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unauthorized"
+            }
           },
           "403": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Forbidden"
+            }
           },
           "404": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Not Found"
+            }
           },
           "409": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Conflict"
+            }
           },
           "412": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Failed"
+            }
           },
           "422": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unprocessable Content"
+            }
           },
           "428": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Required"
+            }
           },
           "503": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Service Unavailable"
+            }
           }
         }
       }
@@ -1809,94 +1809,94 @@
             }
           },
           "400": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Bad Request"
+            }
           },
           "401": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unauthorized"
+            }
           },
           "403": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Forbidden"
+            }
           },
           "404": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Not Found"
+            }
           },
           "409": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Conflict"
+            }
           },
           "412": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Failed"
+            }
           },
           "422": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unprocessable Content"
+            }
           },
           "428": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Required"
+            }
           },
           "503": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Service Unavailable"
+            }
           }
         }
       }
@@ -1952,94 +1952,94 @@
             }
           },
           "400": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Bad Request"
+            }
           },
           "401": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unauthorized"
+            }
           },
           "403": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Forbidden"
+            }
           },
           "404": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Not Found"
+            }
           },
           "409": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Conflict"
+            }
           },
           "412": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Failed"
+            }
           },
           "422": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Unprocessable Content"
+            }
           },
           "428": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Precondition Required"
+            }
           },
           "503": {
+            "description": "Problem response; supplied values are never echoed",
             "content": {
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemResponse"
                 }
               }
-            },
-            "description": "Service Unavailable"
+            }
           }
         }
       }

@@ -18,7 +18,7 @@ in this checkout and is not included. No claim is made that the source blueprint
 | Product boundaries and components | 1–3 | [Architecture](../architecture/overview.md) |
 | Data model and versioned fields | 4 | [Data dictionary](../data/data-dictionary.md), [ER diagram](../data/er-diagram.md) |
 | Registration and patient overview | 5 | [Registry workflow](../workflows/registration.md) |
-| Encounters and records lifecycle | 6 | Baseline design; implementation planned |
+| Encounters and records lifecycle | 6 | [Unit 02](../units/02-encounters.md), [encounter workflow](../workflows/encounters.md), [ADR-003](../architecture/adr/003-encounter-lifecycle.md) |
 | Medication, growth, vaccines, development | 7–10 | [Rules register](../clinical/rules-register.md), [safety cases](../clinical/safety-cases.md) |
 | Investigations, files, follow-up and AI | 11–13 | Baseline design; implementation planned |
 | API and security | 14–15 | [API contract](../api/openapi.yaml), [architecture](../architecture/overview.md) |

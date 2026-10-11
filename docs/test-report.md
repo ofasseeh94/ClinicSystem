@@ -10,7 +10,7 @@
 | Playwright | PASS: both registry and encounter workflows |
 | Migration 003 / readiness | PASS: applied locally to development/test DBs; earlier checksums preserved |
 | Desktop/mobile encounter screenshots | Inspected; synthetic records only |
-| Remote Actions | Pending publication verification; recorded below when available |
+| Remote Actions | Initial run failed only the contract comparison; Python HTTP 422 reason text differs between local 3.14 and CI 3.12. Explicit error descriptions added; corrected run pending. |
 | Production, clinical acceptance, backup restore | NOT RUN |
 
 Used the same local Python/Node/PostgreSQL environment and commands as Unit 01 below. New tests
@@ -20,6 +20,9 @@ nonfinite/nonpositive measurements, Cairo date boundary and concurrent edits/cre
 Browser acceptance enters notes/measurements, reviews/signs, appends a correction and reopens on mobile.
 Initial failures were resolved: consistent UTC retry timestamps, accessible selector labels, a reason
 input race while saving and the test locator for disabled fields. Upstream TestClient warning remains.
+Initial remote evidence: [run 38126328625](https://github.com/ofasseeh94/ClinicSystem/actions/runs/38126328625)
+passed frontend/lint and 28 tests; the contract check exposed Python-version-dependent HTTP descriptions.
+Encounter routes now supply stable descriptions, preserving the strict schema equality check.
 
 ## 2026-10-11 — Unit 01 registry
 

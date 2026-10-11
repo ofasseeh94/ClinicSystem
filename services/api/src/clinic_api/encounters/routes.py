@@ -21,7 +21,11 @@ router = APIRouter(
     prefix="/v1/patients/{patient_id}/encounters",
     tags=["Encounters"],
     responses={
-        s: {"model": ProblemResponse} for s in (400, 401, 403, 404, 409, 412, 422, 428, 503)
+        s: {
+            "model": ProblemResponse,
+            "description": "Problem response; supplied values are never echoed",
+        }
+        for s in (400, 401, 403, 404, 409, 412, 422, 428, 503)
     },
 )
 

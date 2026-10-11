@@ -85,6 +85,7 @@ Backup restore has not been tested; real data remains outside this development s
 | `tests/e2e/encounters.spec.ts` | Executable staff browser workflow and desktop/mobile screenshots. |
 | `docs/screenshots/unit-02-encounter.png`, `docs/screenshots/unit-02-mobile.png` | Fictional UI evidence. |
 | `README.md`, `docs/00-index.md` | Entry points and links. |
+| `docs/design/README.md`, `packages/shared-contracts/README.md` | Updated design navigation and contract maintenance guidance. |
 | `docs/architecture/overview.md`, `docs/architecture/adr/003-encounter-lifecycle.md` | Current boundaries and preservation rationale. |
 | `docs/data/data-dictionary.md`, `docs/data/er-diagram.md` | Added storage and relationships. |
 | `docs/workflows/encounters.md` | Staff workflow. |
