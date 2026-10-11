@@ -1,6 +1,7 @@
 import unittest
-from fastapi.testclient import TestClient
+
 from clinic_api.main import app
+from fastapi.testclient import TestClient
 
 
 class HealthTests(unittest.TestCase):

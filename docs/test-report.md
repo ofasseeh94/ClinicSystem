@@ -1,4 +1,31 @@
-# M0 validation report — 2026-10-10
+# Validation report
+
+## 2026-10-11 — Unit 01 registry
+
+| Check | Result |
+| --- | --- |
+| Repository structure | PASS |
+| Ruff (API, scripts and Python tests) | PASS |
+| Pytest unit/integration/security/contract suite | PASS: 19 tests, using actual PostgreSQL 17.11 |
+| TypeScript `tsc --noEmit` | PASS |
+| Vite production bundle | PASS |
+| Playwright browser acceptance | PASS: one end-to-end flow, desktop and mobile screenshots |
+| Migrations | PASS: checksum verification, repeated application and immutable v1/v2 history |
+| Local readiness and development start/stop | PASS; PostgreSQL on 55432, API on 8000, web on 5173 |
+| Remote GitHub Actions | Pending publication/status verification |
+| Docker Compose startup | NOT RUN: Docker unavailable locally; PostgreSQL binaries used instead |
+| Production/clinical acceptance and backup restore | NOT RUN; no production readiness claimed |
+
+Commands: `python scripts/check_structure.py`; `python -m ruff check --config services/api/pyproject.toml services/api scripts tests`;
+`python -m pytest -q --tb=short` with TEST_DATABASE_URL; `npm run typecheck`; `npm run build`;
+`npx playwright test` with DEV_AUTH_TOKEN and live synthetic servers. Dependencies run from local NTFS.
+Python 3.14.4 and Node 24.15.0 were used locally; CI is configured for Python 3.12 / Node 22.
+One upstream FastAPI/Starlette TestClient deprecation warning is present with pinned httpx; tests pass.
+
+Screenshots: [registry](screenshots/unit-01-registry.png), [overview](screenshots/unit-01-overview.png),
+[mobile](screenshots/unit-01-mobile.png). All are synthetic.
+
+## Earlier foundation results (historical)
 
 - PASS: repository structure validator.
 - PASS: one foundation unittest.

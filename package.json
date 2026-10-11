@@ -8,6 +8,11 @@
   "scripts": {
     "dev:web": "npm run dev --workspace @clinic/web",
     "typecheck": "npm run typecheck --workspace @clinic/web",
-    "build": "npm run build --workspace @clinic/web"
+    "build": "npm run build --workspace @clinic/web",
+    "test:e2e": "playwright test",
+    "check:structure": "python scripts/check_structure.py"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0"
   }
 }

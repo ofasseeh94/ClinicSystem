@@ -1,5 +1,15 @@
 # Change log
 
+## 2026-10-11 — Unit 01: patient registry
+
+Resolved Drive dependency issues with a local NTFS runtime and tested actual PostgreSQL 17.11.
+Added normalized registry migrations, staff auth/role checks, masked Arabic/English search, transactional
+registration, duplicate review, idempotent retries, audited ETag corrections, explicit allergy states,
+immutable versioned background forms and a responsive patient overview. Added generated API contracts,
+19 Python tests, a browser acceptance flow, desktop/mobile screenshots, locked dependencies, launch/sync
+scripts, PostgreSQL-backed CI and complete maintenance documentation. No clinical algorithms or production
+release; live identity, privacy, operations and clinical gates remain open.
+
 ## 2026-10-10 — M0 foundation
 
 Established repository layout, stack ADR, frontend foundation page, health API, local PostgreSQL configuration, baseline checks and CI. No application migrations or clinical features; no migration rollback is needed.

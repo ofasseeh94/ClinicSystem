@@ -1,9 +1,11 @@
 # Milestone ledger
 
-| Milestone | Status | Scope |
+| Milestone | Status | Scope and limitations |
 | --- | --- | --- |
-| M0 | IN_PROGRESS | Scaffold, documentation, checks and CI |
-| M1 | PLANNED | Registry and audited authenticated registration |
-| M2–M10 | PLANNED | Encounters, documents, clinical engines, tasks, AI and parents |
+| M0 | TESTED locally | Structure, dependency installation on NTFS, typecheck/build, lint and PostgreSQL runtime checks. Docker startup remains untested on this workstation. |
+| M1 / Unit 01 | TESTED for synthetic development | Registry, guardian contacts, aliases, explicit allergy review, search, duplicate review, revision/audit, form v1/v2, overview. Live managed login/MFA, guardian sharing/authority administration, form publishing UI and production gates remain open. |
+| M2 | PLANNED | Encounters, immutable signed notes/addenda, dated measurements and encounter-age history. |
+| M3–M10 | PLANNED | Documents, verified clinical rules, growth/vaccines/development, tasks, AI and parent access. |
 
-CI, database startup and dependency installation must be verified in a provisioned environment. No feature is clinically validated or production ready.
+TESTED refers to the executable development acceptance suite. No unit is CLINICALLY_VALIDATED
+or PRODUCTION_READY. Remote Actions results are recorded separately in the validation report.

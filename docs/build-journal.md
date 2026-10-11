@@ -10,8 +10,8 @@ Last updated: 2026-10-11 (clinic timezone: Africa/Cairo).
 Repository: local Git repository at `G:/My Drive/Work/Pediatrics/ClinicSystem-AI`.
 Remote repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem), public.
 The initial source/documentation upload completed; `main` tracks `origin/main`. See Step 004.
-Current milestone: M0 foundation established; full environment validation remains incomplete.
-Patient registration and all clinical features remain planned.
+Current milestone: M1 / Unit 01 registry tested with synthetic data. M0 local build blockers resolved.
+Patient registration is implemented; encounters and other clinical modules remain planned. Production gates remain open.
 
 ## Step 001 — Establish the repository foundation
 
@@ -140,6 +140,59 @@ To revise earlier parts, follow the design navigation map and Step 001 file guid
 owning source/documentation together, and append a new journal entry. Commit subsequent changes
 and push `main` to `origin`. Do not rewrite the imported specification to conceal historical decisions.
 Git history preserves the initial scaffold; no database rollback is needed for this documentation step.
+
+## Step 005 — Resolve local development dependencies and PostgreSQL
+
+Date: 2026-10-11. Outcome: local build and actual PostgreSQL testing enabled.
+
+Moved npm dependencies and the Python venv to local NTFS under `%LOCALAPPDATA%/ClinicSystem`;
+installed pinned dependencies and EDB PostgreSQL 17.11 binaries, initialized a password-protected
+loopback cluster, and created separate synthetic-development and `_test` databases.
+Credentials remain in ignored local configuration/runtime files and are not uploaded.
+Docker remains unavailable; PostgreSQL itself was exercised rather than substituting SQLite or memory storage.
+
+Added sync/start/stop scripts with hidden server processes and PID/start-time validation; the sync
+script excludes dependencies/secrets. Captured setup in README and the development runbook.
+Typecheck/build and database startup succeeded. Earlier M0 dependency blockers are resolved locally.
+No real-data backup/restore or production deployment was performed.
+
+## Step 006 — Build Unit 01: the patient registry
+
+Date: 2026-10-11. Outcome: TESTED for synthetic development.
+
+### What was completed and how
+
+1. Added ordered checksum-verified PostgreSQL migrations for patients, contacts, scoped links,
+   aliases, allergy records, form definitions/responses, replay keys and audit events.
+2. Split the backend into configuration/auth/errors/database and registry route/schema/service/query/form/audit modules.
+3. Added clinic/role enforcement and explicit local development authentication; production refuses local keys
+   and verifies managed RS256 JWT claims. Live provider/MFA/browser OIDC remain a release gate.
+4. Added quick registration in one transaction, unique clinic codes, masked name/alias/guardian/phone search,
+   deliberate duplicate review, and request keys that prevent duplicate creates on retries.
+5. Added ETag/version-controlled corrections with reasons and before/after audit snapshots.
+6. Added explicit allergy states and immutable background form v1/v2 responses. New history appends a record,
+   and the overview receives the exact saved form schema. Numeric entry bounds are not clinically validated.
+7. Built a responsive staff registry, registration/optional background form and patient overview with
+   later-module empty states. Arabic text is preserved and normalized only for search.
+8. Added generated OpenAPI YAML/JSON, shared frontend types, PostgreSQL/security/contract tests,
+   Playwright acceptance, synthetic screenshots and a PostgreSQL-enabled GitHub workflow.
+9. Updated design/data/workflow/setup docs and added a complete unit maintenance guide and file manifest.
+
+### Verification, revisiting and limits
+
+19 Python tests pass; Ruff/structure and TypeScript/Vite build pass; the real browser workflow passes.
+Desktop/mobile screenshots were inspected. Initial browser-test failures exposed a test selector issue
+and duplicate synthetic names on reruns; the fixture now uses distinct names and tests the duplicate path deliberately.
+Tests also caught a phone-mask text encoding error, which was fixed while preserving original patient names.
+
+See [Unit 01 guide](units/01-patient-registry.md) for the exact changed-file manifest, data flow and
+modification map; [test report](test-report.md) for environment/results; [ADR-002](architecture/adr/002-registry-boundaries.md)
+for persistence/search/auth/history choices. The two migrations are now applied locally and must never be rewritten.
+Changes require additive migrations/form versions; destructive rollback is not provided. Production restore drills,
+restricted DB roles, external audit integrity, distributed limits, managed sign-in and clinical/privacy sign-offs remain open.
+
+Next planned unit: encounters, signed note lifecycle/addenda and dated measurements. No prescribing,
+growth/vaccine recommendations, documents, parent messaging or AI was added in this unit.
 
 ## Template for every future build step
 

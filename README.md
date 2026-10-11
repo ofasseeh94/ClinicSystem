@@ -1,47 +1,72 @@
 # Pediatric Clinic System
 
 Repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem).
-Full design: [design baseline and navigation map](docs/design/README.md).
+[Design baseline](docs/design/README.md) · [Documentation index](docs/00-index.md) · [Build journal](docs/build-journal.md)
 
-Private pediatric clinic EMR scaffold. Current milestone: M0 (repository foundation).
-No clinical features are implemented. Use synthetic data only; this is not ready for patient care.
+Unit 01: a PostgreSQL-backed patient registry for **synthetic development data**.
+Register patients and guardians, search Arabic/English names and aliases, review duplicate candidates,
+reopen an overview, correct identity details with a reason, and append versioned medical/birth background.
+Unknown allergy history remains explicit. Clinical modules are planned, not implemented.
+This is not a production medical record system; managed sign-in, security and clinical release gates remain open.
 
 ## Repository map
 
-Start with [docs index](docs/00-index.md) and the [step-by-step build journal](docs/build-journal.md). Web client: `apps/web`; API: `services/api`;
-shared contracts and deterministic clinical rules: `packages`; migrations and synthetic seeds: `db`.
+`apps/web`: React interface; `services/api`: FastAPI/auth/registry; `packages/shared-contracts`:
+shared TypeScript types and generated OpenAPI; `db/migrations`: ordered PostgreSQL schema/form versions;
+`tests`: unit, PostgreSQL integration, security and browser tests; `docs`: design and maintenance history.
 
 ## Local setup
 
-Prerequisites: Node.js 22+, Python 3.12+, and Docker Compose for PostgreSQL.
+Prerequisites: Node.js 22+, Python 3.12+ and PostgreSQL 17 (Docker Compose or local binaries).
 
-1. Copy `.env.example` to `.env` and set a local database password.
-2. Run `docker compose --env-file .env -f infrastructure/compose.yaml up -d`.
-3. Run `npm install` at the repository root.
-4. Run `python -m venv .venv`, then `.venv/Scripts/python -m pip install -e "services/api[dev]"` on Windows.
-5. Run `npm run dev:web` for the frontend foundation page.
-6. Run `.venv/Scripts/python -m uvicorn clinic_api.main:app --app-dir services/api/src --reload` for the API health endpoint.
+1. Copy `.env.example` to `.env`, replace the local password, and match `DATABASE_URL` to it.
+2. If using Docker, run `docker compose --env-file .env -f infrastructure/compose.yaml up -d`.
+3. Install Python dependencies into a local venv:
+   `python -m venv .venv`, `.venv/Scripts/python -m pip install -r services/api/requirements-dev.lock`,
+   then `.venv/Scripts/python -m pip install -e services/api --no-deps`.
+4. Set `DATABASE_URL` in the API process environment and run `.venv/Scripts/python scripts/migrate.py`.
+5. Run `npm ci`, then `npm run dev:web`. Vite forwards `/api` to `127.0.0.1:8000`.
+6. Set `APP_ENV=development` and a random `DEV_AUTH_TOKEN` of at least 32 characters for the API.
+   Run `.venv/Scripts/python -m uvicorn clinic_api.main:app --app-dir services/api/src --host 127.0.0.1 --port 8000 --no-access-log`.
+7. Open `http://127.0.0.1:5173` and enter the development token. The browser holds it in memory only;
+   closing the session, reloading or 20 minutes of inactivity clears the browser session.
 
-On POSIX systems use `.venv/bin/python` in place of `.venv/Scripts/python`.
-The API currently has no database connection or patient endpoints. Configuration does not imply functionality.
+On POSIX, use `.venv/bin/python`. The API reads environment variables, not `.env` automatically.
+The Windows launcher below loads `.env`. Missing database/auth configuration fails closed.
 
-## Checks
+## Windows / Google Drive workspace
 
-`python scripts/check_structure.py` validates the scaffold.
-`python -m unittest discover -s tests/unit` runs foundation tests.
-`npm run typecheck` and `npm run build` validate the web client after install.
-`.venv/Scripts/python -m ruff check services/api` checks Python style after install.
-CI runs these checks plus the API smoke test. OpenAPI baseline: `docs/api/openapi.yaml`.
+Dependency extraction on the Drive mount failed during M0. Keep dependencies on local NTFS:
 
-## Next milestone
+1. Run `./scripts/sync-local.ps1` to copy source into `%LOCALAPPDATA%/ClinicSystem/build`.
+2. Run `npm ci` in that build directory.
+3. Create `%LOCALAPPDATA%/ClinicSystem/runtime/venv` and install the pinned Python development dependencies there.
+4. Configure the repository's ignored `.env` with your PostgreSQL connection.
+5. Run `./scripts/start-dev.ps1`. It applies checksum-verified migrations, generates a local development key
+   if needed, and starts API/web processes hidden on loopback. Find the key in
+   `%LOCALAPPDATA%/ClinicSystem/runtime/development-access-key.txt`.
+6. Run `./scripts/stop-dev.ps1` to stop only the recorded API/web process trees, with process-start checks.
+   Database data is preserved. Re-run the sync script after edits before rebuilding the frontend.
 
-M1: authenticated registry, transactional patient/guardian registration, search, versioned forms,
-and audit. Managed identity, hosting region, production security and clinical validation remain open.
+This workstation currently uses local PostgreSQL binaries on port 55432 and local NTFS dependencies.
+Portable PostgreSQL startup/stop instructions are in the [development runbook](docs/operations/runbooks/development.md).
+Do not copy `.env` or generated dependency folders into Git. The repository is public.
 
-## Workspace filesystem limitation
+## Verification
 
-The initial dependency install in this Google Drive-mounted workspace failed with npm EBADF/EPERM write errors; Python virtual environment bootstrapping also stalled. Use a local NTFS checkout for dependency installation and builds, excluding `.venv` and `node_modules` when copying. The generated npm lockfile is available for `npm ci`. Structure checks pass, but frontend build and API smoke checks have not been verified locally. Docker was not available, so PostgreSQL startup was not verified.
+- `python scripts/check_structure.py`
+- `python -m ruff check --config services/api/pyproject.toml services/api scripts tests`
+- `python -m pytest` (set `TEST_DATABASE_URL` to a PostgreSQL database ending in `_test`; otherwise DB tests skip)
+- `npm run typecheck` and `npm run build`
+- `python scripts/export-openapi.py` after API changes; the contract test detects stale published schemas
+- `npx playwright install chromium`, then `npm run test:e2e` with the servers running and `DEV_AUTH_TOKEN` set
 
-## Source control and documentation
+CI provisions PostgreSQL and runs the same checks plus browser acceptance. Screenshots use fictional records.
+See [test report](docs/test-report.md), [Unit 01 guide](docs/units/01-patient-registry.md) and [screenshots](docs/screenshots/README.md).
 
-The `main` branch holds the source scaffold and all supplied design documentation. Start with the documentation index and build journal before editing. After each build step, update the journal with changed files, reasoning, verification and modification guidance. `.env`, virtual environments, build outputs and dependency folders are excluded by `.gitignore`. This repository is public; only source, configuration examples and synthetic-data design material belong here.
+## Production prerequisites
+
+Production configuration refuses development keys and requires managed OIDC issuer/audience/JWKS settings.
+The JWT verifier is tested; a live identity provider, MFA, browser OIDC flow, relationship permissions,
+restricted database role, TLS/encryption, backup/restore drills, operational monitoring, privacy review and
+clinical validation are still required before real patient data. No parent access or outbound messages exist.
