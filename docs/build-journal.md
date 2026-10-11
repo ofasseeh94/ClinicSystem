@@ -9,7 +9,7 @@ Update this document after every build step, including partial or blocked steps.
 Last updated: 2026-10-11 (clinic timezone: Africa/Cairo).
 Repository: local Git repository at `G:/My Drive/Work/Pediatrics/ClinicSystem-AI`.
 Remote repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem), public.
-The initial source/documentation upload is tracked in Step 004 below.
+The initial source/documentation upload completed; `main` tracks `origin/main`. See Step 004.
 Current milestone: M0 foundation established; full environment validation remains incomplete.
 Patient registration and all clinical features remain planned.
 
@@ -107,7 +107,8 @@ completion entry when creation succeeds. No migration or recovery action is need
 
 ## Step 004 — Link the design and source to GitHub
 
-Date: 2026-10-11. Purpose: place the complete existing scaffold and supplied design baseline
+Date: 2026-10-11. Outcome: completed; 44 source/configuration/documentation files published.
+Purpose: place the complete existing scaffold and supplied design baseline
 in the user's `ofasseeh94/ClinicSystem` repository. This supersedes the Step 003 sign-in blocker.
 Repository metadata verified the account, push permission, public visibility and default branch `main`.
 The repository had no branch refs before upload.
@@ -129,8 +130,10 @@ No individual clinic feature or application migration was added.
 ### Verification and maintenance
 
 Structure check and the foundation unittest pass. The imported specification hash is recorded
-in its design README. Publication is verified by comparing the remote main SHA with the local
-commit and inspecting the remote files. Existing dependency-install and database validation limits
+in its design README. Publication verified: local HEAD and remote `main` both resolved to
+`877e2b8bf5ce05f8fb2cc6be46302740b4d195bc` after the initial push. The GitHub connector
+retrieved `docs/design/README.md` successfully. Initial commit: [877e2b8](https://github.com/ofasseeh94/ClinicSystem/commit/877e2b8bf5ce05f8fb2cc6be46302740b4d195bc).
+The follow-up documentation commit records this result. Remote Actions status has not been verified. Existing dependency-install and database validation limits
 remain recorded in the test report; uploading source does not resolve them.
 
 To revise earlier parts, follow the design navigation map and Step 001 file guide, change the
