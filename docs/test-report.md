@@ -10,7 +10,7 @@
 | Playwright | PASS: both registry and encounter workflows |
 | Migration 003 / readiness | PASS: applied locally to development/test DBs; earlier checksums preserved |
 | Desktop/mobile encounter screenshots | Inspected; synthetic records only |
-| Remote Actions | Initial run failed only the contract comparison; Python HTTP 422 reason text differs between local 3.14 and CI 3.12. Explicit error descriptions added; corrected run pending. |
+| Remote Actions | PASS: [corrected run 38126496635](https://github.com/ofasseeh94/ClinicSystem/actions/runs/38126496635), including all 29 Python tests, frontend checks and both browser workflows |
 | Production, clinical acceptance, backup restore | NOT RUN |
 
 Used the same local Python/Node/PostgreSQL environment and commands as Unit 01 below. New tests
@@ -23,6 +23,9 @@ input race while saving and the test locator for disabled fields. Upstream TestC
 Initial remote evidence: [run 38126328625](https://github.com/ofasseeh94/ClinicSystem/actions/runs/38126328625)
 passed frontend/lint and 28 tests; the contract check exposed Python-version-dependent HTTP descriptions.
 Encounter routes now supply stable descriptions, preserving the strict schema equality check.
+Corrected code: [ff9e96e](https://github.com/ofasseeh94/ClinicSystem/commit/ff9e96e0e849d0ce7c20700d343e27c9aa3502a7).
+The successful run used Python 3.12 / Node 22 and PostgreSQL 17.11 on Linux. Local API readiness
+was rechecked after updating the preview, with the existing development key preserved.
 
 ## 2026-10-11 — Unit 01 registry
 

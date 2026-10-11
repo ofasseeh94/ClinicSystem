@@ -262,6 +262,11 @@ Publication/remote verification results are recorded in the validation report af
 The initial remote run passed build/lint and 28 tests but failed generated-contract equality because
 Python 3.12 and 3.14 use different default HTTP 422 descriptions. Added explicit encounter error
 descriptions and regenerated contracts; strict contract checking remains enabled.
+Completed remote verification: [run 38126496635](https://github.com/ofasseeh94/ClinicSystem/actions/runs/38126496635)
+passed the full workflow for [corrected commit ff9e96e](https://github.com/ofasseeh94/ClinicSystem/commit/ff9e96e0e849d0ce7c20700d343e27c9aa3502a7).
+This includes all 29 Python tests, frontend checks and both browser workflows. The local preview
+was updated and readiness passed; the existing development access key was preserved.
+A documentation-only follow-up records this evidence and the repository synchronization result.
 
 ## Template for every future build step
 
