@@ -29,7 +29,7 @@ Prerequisites: Node.js 22+, Python 3.12+ and PostgreSQL 17 (Docker Compose or lo
 5. Run `npm ci`, then `npm run dev:web`. Vite forwards `/api` to `127.0.0.1:8000`.
 6. Set `APP_ENV=development` and a random `DEV_AUTH_TOKEN` of at least 32 characters for the API.
    Run `.venv/Scripts/python -m uvicorn clinic_api.main:app --app-dir services/api/src --host 127.0.0.1 --port 8000 --no-access-log`.
-7. Open `http://127.0.0.1:5173` and enter the development token. The browser holds it in memory only;
+7. Open `http://127.0.0.1:5174` and enter the development token. The browser holds it in memory only;
    closing the session, reloading or 20 minutes of inactivity clears the browser session.
 
 On POSIX, use `.venv/bin/python`. The API reads environment variables, not `.env` automatically.

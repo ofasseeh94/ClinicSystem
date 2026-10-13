@@ -22,12 +22,12 @@ if (-not $env:DEV_AUTH_TOKEN) { $env:DEV_AUTH_TOKEN = [Convert]::ToHexString([Se
 Set-Content -LiteralPath (Join-Path $RuntimeDirectory 'development-access-key.txt') -Value $env:DEV_AUTH_TOKEN -NoNewline
 & $pythonExe (Join-Path $repoRoot 'scripts\migrate.py')
 if ($LASTEXITCODE -ne 0) { throw 'Database migration failed; servers were not started.' }
-foreach ($port in @(8000,5173)) {
+foreach ($port in @(8000,5174)) {
   if (Get-NetTCPConnection -LocalPort $port -State Listen -ErrorAction SilentlyContinue) { throw "Port $port is already in use; do not launch a second instance." }
 }
 $api = Start-Process -FilePath $pythonExe -ArgumentList @('-m','uvicorn','clinic_api.main:app','--app-dir',('"' + (Join-Path $repoRoot 'services\api\src') + '"'),'--host','127.0.0.1','--port','8000','--no-access-log') -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $RuntimeDirectory 'api.out.log') -RedirectStandardError (Join-Path $RuntimeDirectory 'api.err.log')
-$web = Start-Process -FilePath $nodeExe -ArgumentList @(('"' + $viteScript + '"'),'--host','127.0.0.1','--port','5173','--strictPort') -WorkingDirectory (Join-Path $BuildDirectory 'apps\web') -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $RuntimeDirectory 'web.out.log') -RedirectStandardError (Join-Path $RuntimeDirectory 'web.err.log')
+$web = Start-Process -FilePath $nodeExe -ArgumentList @(('"' + $viteScript + '"'),'--host','127.0.0.1','--port','5174','--strictPort') -WorkingDirectory (Join-Path $BuildDirectory 'apps\web') -WindowStyle Hidden -PassThru -RedirectStandardOutput (Join-Path $RuntimeDirectory 'web.out.log') -RedirectStandardError (Join-Path $RuntimeDirectory 'web.err.log')
 @(@{ Id=$api.Id; Started=$api.StartTime.ToUniversalTime().ToString('o') },@{ Id=$web.Id; Started=$web.StartTime.ToUniversalTime().ToString('o') }) | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $RuntimeDirectory 'dev-processes.json')
-Write-Output 'Local registry: http://127.0.0.1:5173'
+Write-Output 'Local registry: http://127.0.0.1:5174'
 Write-Output "Development key file: $(Join-Path $RuntimeDirectory 'development-access-key.txt')"
 Write-Output 'Use fictional patients only. Check readiness at http://127.0.0.1:8000/ready.'

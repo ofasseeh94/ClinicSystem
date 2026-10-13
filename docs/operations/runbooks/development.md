@@ -25,6 +25,12 @@ Official download references: [PostgreSQL Windows](https://www.postgresql.org/do
 
 ## Windows servers
 
+Clinic preview: `http://127.0.0.1:5174`; API: `http://127.0.0.1:8000`.
+Port 5173 may belong to another project, such as the productivity tool. Use the clinic URL.
+Vite uses strict port binding so it fails clearly if 5174 is occupied, rather than silently moving.
+If the database/server processes stopped after a restart, start the existing cluster above and
+then run the clinic launcher. Existing registry/encounter data is preserved.
+
 `./scripts/start-dev.ps1` loads the ignored local `.env`, applies migrations, checks ports, writes a random
 local access key and launches API/web processes hidden. `./scripts/stop-dev.ps1` checks recorded PID/start
 identity before stopping the process trees; it leaves PostgreSQL data intact. Start failures should be

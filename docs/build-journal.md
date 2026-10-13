@@ -6,7 +6,7 @@ Update this document after every build step, including partial or blocked steps.
 
 ## Current position
 
-Last updated: 2026-10-11 (clinic timezone: Africa/Cairo).
+Last updated: 2026-10-13 (clinic timezone: Africa/Cairo).
 Repository: local Git repository at `G:/My Drive/Work/Pediatrics/ClinicSystem-AI`.
 Remote repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem), public.
 The initial source/documentation upload completed; `main` tracks `origin/main`. See Step 004.
@@ -267,6 +267,35 @@ passed the full workflow for [corrected commit ff9e96e](https://github.com/ofass
 This includes all 29 Python tests, frontend checks and both browser workflows. The local preview
 was updated and readiness passed; the existing development access key was preserved.
 A documentation-only follow-up records this evidence and the repository synchronization result.
+
+## Step 008 — Restore the clinic preview on its own port
+
+Date: 2026-10-13. Outcome: local preview restored; supersedes the development web address used in Steps 005–007.
+
+Purpose: the old `http://127.0.0.1:5173/` address was serving the Momentum productivity tool.
+HTTP inspection confirmed that page title, while the clinic API/database were stopped. Restarted
+the existing local PostgreSQL cluster and clinic servers; retained the existing data and access key.
+Changed the clinic web address to `http://127.0.0.1:5174/`. The API remains on 8000.
+
+Exact changes: `apps/web/vite.config.ts` sets loopback port 5174 with strict binding;
+`scripts/start-dev.ps1` checks/launches/reports 5174; `playwright.config.ts` tests that default;
+`.github/workflows/ci.yml` launches the same port; `README.md` and
+`docs/operations/runbooks/development.md` document the correct address and recovery;
+`docs/change-log.md` and this journal record the repair. Earlier historical port references are preserved.
+
+Modification guide: change Vite, launcher, browser-test default and CI port together if another
+address is required. Sync source to the NTFS build before launch. Strict binding prevents Vite
+from silently selecting another port. Start the preserved database cluster before starting the API.
+
+Verification: HTTP title on 5174 is Pediatric Clinic; `/ready` returns ok; 5173 still serves Momentum.
+Both browser acceptance flows pass on 5174 (registry and encounters), repository structure and its
+unit test pass, and Git diff whitespace check passes. Initial acceptance checks ran before startup
+completed and failed connection checks; rerunning after readiness succeeded. No full backend or
+production suite was required for this port-only change. Remote CI results for this repair are not yet verified.
+
+Data/recovery impact: no migration or clinical record change. PostgreSQL restarts reuse the existing
+cluster; no database/volume was deleted. Stopping the preview uses recorded clinic process identities.
+Clinical/production release gates and the next planned M3 unit remain as recorded in Step 007.
 
 ## Template for every future build step
 

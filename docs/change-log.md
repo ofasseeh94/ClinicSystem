@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-10-13 — Restore clinic preview
+
+Assigned the clinic preview port 5174 after port 5173 was serving the productivity tool.
+Aligned Vite strict binding, Windows launcher, browser tests, CI and setup documentation.
+Restarted existing local database/API/web processes and verified the clinic title, readiness and
+both browser workflows. Preserved existing data and development access key; no migration changed.
+
 ## 2026-10-11 — Unit 02: encounters
 
 Added migration 003, clinic/role-scoped dated encounters, saved birth-date/age context, structured
