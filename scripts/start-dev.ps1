@@ -11,7 +11,13 @@ if (Test-Path -LiteralPath $envFile) {
 if (-not $env:DATABASE_URL) { throw 'Set DATABASE_URL in your environment or local .env first.' }
 if ($env:APP_ENV -and $env:APP_ENV -ne 'development') { throw 'This launcher is for synthetic development only.' }
 $env:APP_ENV = 'development'
+if (-not $env:DOCUMENT_SCAN_MODE) { $env:DOCUMENT_SCAN_MODE = 'synthetic' }
 New-Item -ItemType Directory -Force -Path $RuntimeDirectory | Out-Null
+if (-not $env:DOCUMENT_ENCRYPTION_KEY) {
+  $documentKeyFile = Join-Path $RuntimeDirectory 'document-encryption-key.txt'
+  if (Test-Path -LiteralPath $documentKeyFile) { $env:DOCUMENT_ENCRYPTION_KEY = (Get-Content -LiteralPath $documentKeyFile -Raw).Trim() }
+  else { $env:DOCUMENT_ENCRYPTION_KEY = [Convert]::ToBase64String([Security.Cryptography.RandomNumberGenerator]::GetBytes(32)); Set-Content -LiteralPath $documentKeyFile -Value $env:DOCUMENT_ENCRYPTION_KEY -NoNewline }
+}
 $pythonExe = Join-Path $RuntimeDirectory 'venv\Scripts\python.exe'
 if (-not (Test-Path -LiteralPath $pythonExe)) { $pythonExe = Join-Path $repoRoot '.venv\Scripts\python.exe' }
 if (-not (Test-Path -LiteralPath $pythonExe)) { throw 'Create a Python venv and install services/api[dev] first.' }

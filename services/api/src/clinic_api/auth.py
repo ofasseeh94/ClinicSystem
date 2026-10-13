@@ -25,8 +25,10 @@ ROLE_PERMISSIONS = {
     },
 }
 ROLE_PERMISSIONS["registrar"].add("encounter:read")
+ROLE_PERMISSIONS['registrar'].update({'document:read','document:write','investigation:read'})
 for clinical_role in ("clinician", "admin"):
     ROLE_PERMISSIONS[clinical_role].update({"encounter:read", "encounter:write"})
+    ROLE_PERMISSIONS[clinical_role].update({'document:read','document:write','investigation:read','investigation:write'})
 
 
 @dataclass(frozen=True)

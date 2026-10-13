@@ -1,5 +1,9 @@
 # Unit 01 visual verification
 
+Unit 03 evidence: [desktop documents/viewer](unit-03-documents.png),
+[mobile investigations/correction history](unit-03-investigations-mobile.png).
+The sample image and reported text are fictional; development attachments are explicitly unscanned.
+
 Unit 02 evidence: [desktop encounter](unit-02-encounter.png), [mobile encounter](unit-02-mobile.png).
 The encounter flow covers dated notes/measurements, review/signing, immutable fields, addendum and reopening.
 

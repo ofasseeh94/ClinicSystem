@@ -10,8 +10,9 @@ Last updated: 2026-10-13 (clinic timezone: Africa/Cairo).
 Repository: local Git repository at `G:/My Drive/Work/Pediatrics/ClinicSystem-AI`.
 Remote repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem), public.
 The initial source/documentation upload completed; `main` tracks `origin/main`. See Step 004.
-Current milestone: M2 / Unit 02 encounters tested with synthetic data. M0 local build blockers resolved.
-Registry, encounters and raw dated measurements are implemented. Later clinical modules and production gates remain open.
+Current milestone: M3 / Unit 03 documents/investigations tested with synthetic data. M0 local build blockers resolved.
+Registry, encounters, raw measurements, encrypted attachments and investigation records are implemented.
+Live malware scanning, later clinical modules and production gates remain open.
 
 ## Step 001 — Establish the repository foundation
 
@@ -296,6 +297,70 @@ production suite was required for this port-only change. Remote CI results for t
 Data/recovery impact: no migration or clinical record change. PostgreSQL restarts reuse the existing
 cluster; no database/volume was deleted. Stopping the preview uses recorded clinic process identities.
 Clinical/production release gates and the next planned M3 unit remain as recorded in Step 007.
+
+## Step 009 — Build Unit 03: documents and investigations
+
+Date: 2026-10-13. Outcome: TESTED for synthetic development; extends Steps 006–008.
+
+### What was built and how
+
+1. Read prior build decisions and baseline M3; retained clinic-scoped IDs, historical records and atomic audit.
+2. Added migration 004 for encrypted document content/metadata/lifecycle, append-only scan evidence,
+   versioned investigation requests and immutable results with correction chains.
+3. Chose bounded PostgreSQL ciphertext for the first private storage backend. AES-GCM protects original
+   bytes with clinic/document context; SHA-256 records the file hash. Metadata and audit remain DB records.
+4. Added static PDF/PNG/JPEG format checks and 10 MiB streaming limits, PDF page/active-content restrictions,
+   image validation/pixel caps and safe parser diagnostics. Added a ClamAV streaming adapter with fail-closed
+   quarantine behavior and bounded network deadlines. Local synthetic mode is separately labeled and forbidden in production.
+5. Added authenticated 60-second actor/clinic/patient/document/hash tickets, issued/used in POST bodies.
+   Retrieval rechecks state/permissions and verifies encrypted bytes/hash under the lifecycle transaction lock.
+6. Added patient/encounter-scoped request creation, status transitions with If-Match, attributed reported
+   results and immutable corrections. UUID replay prevents duplicate creates; corrections retain prior values.
+7. Built Documents/Investigations forms, lists, source links, memory-only viewer/download, withdrawal/rescan,
+   reason prompts, pagination and navigation safeguards. Added a clearly fictional sample file.
+8. Updated config/launcher/dependency pins/CI for stable private keys and explicit synthetic test state.
+   Generated contracts and added real PostgreSQL, scanner-protocol/encryption/parser and browser regression checks.
+9. Updated design/navigation/data/workflow/runbook/status docs and the complete Unit 03 maintenance guide.
+
+### File changes, design decisions and modification guide
+
+The exact changed-file manifest is in [Unit 03](units/03-documents-investigations.md), alongside the
+ownership map and detailed source-to-screen flow. [ADR-004](architecture/adr/004-private-documents.md)
+records why this increment uses encrypted DB storage, explicit scanner states and ticketed retrieval.
+Adjust fields in records schemas/shared types/screens, transactions in records service, byte/scanner/crypto
+policy in files, permissions in auth and persistence through a new migration. Update contracts/tests/docs together.
+The [staff workflow](workflows/documents-investigations.md) describes usage independently of implementation.
+
+### Verification and corrections
+
+39 Python tests pass using PostgreSQL 17.11; Ruff/structure, TypeScript/Vite and all three browser flows pass.
+Inspected document-viewer/mobile screenshots. Browser tests exercise source-file upload/view/download,
+linked result/correction, completion and withdrawal, plus previous units. Fixed a test locator for prefilled
+textarea content; repaired mobile action overflow and added an overflow assertion. Ciphertext tampering,
+wrong context/key, ticket expiry/scope, invalid/active/oversized input, role/patient/clinic isolation, quarantine,
+replay, version conflict and historical corrections were checked. Scanner network fixtures emulate verdicts;
+no live ClamAV engine/signature database was tested. Detailed results are in [the test report](test-report.md).
+
+### Migration, key preservation, limitations and recovery
+
+After updating/restarting the preview, an earlier synthetic attachment was retrieved and its hash
+verified using the preserved key. The final local browser run passed all three workflows.
+
+Migration 004 is additive and applied locally to development/test DBs. Previous migrations were not changed.
+Document metadata is recorded before content; an interrupted upload may leave a pending slot to retry or
+withdraw. Original encrypted content/metadata and results cannot be overwritten/deleted. Withdrawal blocks
+new retrieval, but does not recall bytes already downloaded. No destructive rollback exists.
+
+Preserve the existing document key outside Git; losing/replacing it prevents historical decryption.
+Restore requires a verified DB backup and that key; full restore/rotation is untested. Object storage,
+managed keys, parser process isolation/resource control, production scanner deployment/signatures/private
+transport, quotas/retention, restricted roles, live identity and privacy/clinical sign-off remain release gates.
+Recent-item selectors show 20; full historical selectors are deferred while paginated/API records remain.
+No OCR/AI extraction, external lab messaging, automatic interpretation, clinical reference ranges or prescribing added.
+
+Next: baseline M4 medication knowledge/drug safety foundation needs verified clinical/catalog sources
+and independent validation before dose calculations or prescribing can be enabled. Publication evidence
+will be recorded after the repository push and remote checks.
 
 ## Template for every future build step
 

@@ -1,5 +1,34 @@
 # Validation report
 
+## 2026-10-13 — Unit 03 documents and investigations
+
+| Check | Result |
+| --- | --- |
+| Pytest | PASS: 39 tests against PostgreSQL 17.11, including 10 new document/crypto/parser/protocol/investigation cases |
+| Ruff and repository structure | PASS |
+| TypeScript and Vite bundle | PASS |
+| Playwright | PASS: all three workflows (registry, encounters, documents/investigations) |
+| Migration 004 / readiness | PASS: applied to development/test DBs, previous checksums preserved |
+| Retained attachment after restart | PASS: retrieved an earlier encrypted synthetic attachment and verified its original SHA-256 with the persisted key |
+| Desktop document viewer / mobile investigations | Inspected; mobile action wrapping repaired and no-horizontal-overflow assertion added |
+| Scanner protocol | PASS: controlled TCP fixtures for clean, detection, error and unexpected responses |
+| Live ClamAV signature database, production, parser isolation, backup restore | NOT RUN; local synthetic attachments are explicitly unscanned |
+| Remote GitHub Actions | Pending publication verification |
+
+Commands: documented root checks, Pytest with TEST_DATABASE_URL, typecheck/build and browser acceptance
+with the clinic API/web on 8000/5174. Dependencies added: pypdf 6.20.1 and Pillow 12.3.0; crypto remains
+cryptography 50.0.2. Parser caps, MIME mismatch/active PDF rejection, upload size, original hash,
+encrypted storage and tamper/context integrity were checked. Ticket expiry/scope/withdrawal, role and
+patient/clinic boundaries, optimistic order/document transitions, replay and retained result corrections
+were checked. Browser flow uploads/views/downloads, links a result, corrects it, completes an order and
+withdraws the source; prior units still pass. The first new browser run found a prefilled textarea test
+locator issue, fixed by using its accessible textbox role. Screenshot review caught/fixed mobile overflow.
+Upstream TestClient and the pypdf active-content fixture helper produce deprecation warnings; tests pass.
+
+The scanner fixtures do not claim actual malware detection. Ciphertext/key backup restore, real scanner
+deployment/signature maintenance, quotas/retention, managed keys/rotation, parser sandboxing and live
+identity remain production gates. No real patient attachments or clinical interpretation were used.
+
 ## 2026-10-11 — Unit 02 encounters
 
 | Check | Result |

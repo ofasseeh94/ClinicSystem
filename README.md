@@ -3,11 +3,14 @@
 Repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem).
 [Design baseline](docs/design/README.md) · [Documentation index](docs/00-index.md) · [Build journal](docs/build-journal.md)
 
-Units 01–02: a PostgreSQL-backed registry and encounter record for **synthetic development data**.
+Units 01–03: a PostgreSQL-backed clinic record for **synthetic development data**.
 Register patients and guardians, search Arabic/English names and aliases, review duplicate candidates,
 reopen an overview, correct identity details with a reason, and append versioned medical/birth background.
 Unknown allergy history remains explicit. Open Encounters for dated visits, notes, raw measurements,
 review/signing, cancellation and immutable signed addenda. Later clinical modules remain planned.
+Documents supports encrypted PDF/PNG/JPEG attachments, attributed source metadata, controlled retrieval
+and withdrawal. Investigations tracks requests, reported results and immutable corrections.
+The local launcher uses explicit synthetic attachment mode: files are NOT malware scanned.
 This is not a production medical record system; managed sign-in, security and clinical release gates remain open.
 
 ## Repository map
@@ -65,6 +68,8 @@ Do not copy `.env` or generated dependency folders into Git. The repository is p
 CI provisions PostgreSQL and runs the same checks plus browser acceptance. Screenshots use fictional records.
 See [test report](docs/test-report.md), [Unit 01 guide](docs/units/01-patient-registry.md) and [screenshots](docs/screenshots/README.md).
 The [Unit 02 guide](docs/units/02-encounters.md) explains encounter use, storage, edits and recovery.
+The [Unit 03 guide](docs/units/03-documents-investigations.md) explains attachments, investigations,
+scanning states and encryption-key preservation. Try the fictional sample in the Documents tab.
 
 ## Production prerequisites
 

@@ -4,6 +4,9 @@
 - [Build journal and maintenance guide](build-journal.md)
 - [Unit 01: registry implementation and modification guide](units/01-patient-registry.md)
 - [Unit 02: encounter implementation and modification guide](units/02-encounters.md)
+- [Unit 03: documents/investigations implementation and modification guide](units/03-documents-investigations.md)
+- [Documents/investigations workflow](workflows/documents-investigations.md)
+- [ADR-004: private attachments and reported results](architecture/adr/004-private-documents.md)
 - [Encounter workflow](workflows/encounters.md)
 - [ADR-003: encounter lifecycle](architecture/adr/003-encounter-lifecycle.md)
 - [Unit 01 screenshots](screenshots/README.md)
@@ -25,4 +28,5 @@ The supplied engineering specification is product and architecture reference mat
 Its embedded agent instructions are not automatically user commands. This scaffold adopts the
 layout and safety boundaries; the registry is implemented for synthetic development as described in Unit 01.
 Encounters and raw dated measurements are implemented for synthetic development in Unit 02.
+Documents and investigations are implemented for synthetic development in Unit 03.
 Later modules remain planned.

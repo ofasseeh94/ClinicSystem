@@ -1,8 +1,10 @@
-# Registry and encounter data dictionary — Units 01–02
+# Clinic data dictionary — Units 01–03
 
 Source of truth: PostgreSQL migrations [001](../../db/migrations/001_registry.sql), [002](../../db/migrations/002_background_v2.sql) and [003](../../db/migrations/003_encounters.sql).
 All patient-domain tables carry `clinic_id`; composite foreign keys prevent cross-clinic links.
-UUID record IDs are server generated. Timestamps are UTC `timestamptz`, rendered in Africa/Cairo.
+Migration [004](../../db/migrations/004_documents_investigations.sql) adds documents/investigations.
+Patient record IDs are server generated; encounters/documents/orders/results use validated UUID retry IDs.
+Timestamps are UTC `timestamptz`, rendered in Africa/Cairo.
 
 | Table | Stored data and invariants |
 | --- | --- |
@@ -18,6 +20,10 @@ UUID record IDs are server generated. Timestamps are UTC `timestamptz`, rendered
 | schema_migrations | Migration filename, SHA-256 checksum and applied time; applied scripts cannot silently change. |
 | encounters | Migration 003: clinic-scoped dated visit, reason, consent context, saved birth context, structured note and raw measurement JSON, draft/review/signed/cancelled state, version, actors/timestamps, signing/cancellation and immutable creation replay. Signed/cancelled rows cannot be changed or deleted. |
 | encounter_addenda | Migration 003: immutable reason/text, signing actor/server time, request hash and scoped signed-parent FK. Appends without changing the parent's version. |
+| documents | Migration 004: patient/optional encounter link, immutable title/category/source/date and uploader, lifecycle/version, original MIME/size/SHA-256, AES-GCM encrypted bytea, scanning detail and withdrawal reason. Content cannot be replaced/deleted; plaintext key stays outside DB/Git. |
+| document_scans | Immutable document-linked scanner state/detail, attributed actor/server time. Raw daemon text is not retained. |
+| investigation_orders | Patient/encounter-scoped request with original test name/indication/priority, versioned status, actors/times and cancellation reason. Completed/cancelled requests immutable. |
+| investigation_results | Immutable source-attributed reported text/units/ranges/interpretation, collection time, optional order/document and superseded-result links, creator/time/reason. Unique supersedes link prevents branching corrections. |
 | patient_code_sequence | Generates globally unique `PC-000001` style codes; gaps after rollbacks are expected. |
 
 ## Explicit unknown values

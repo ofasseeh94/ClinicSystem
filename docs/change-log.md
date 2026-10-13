@@ -1,5 +1,14 @@
 # Change log
 
+## 2026-10-13 — Unit 03: documents and investigations
+
+Added migration 004, encrypted private attachments with original hashes and bounded format validation,
+explicit scanner/quarantine/synthetic states, authenticated short-lived retrieval tickets and withdrawal.
+Added investigation orders, versioned status, attributed reported results and immutable correction chains.
+Built Documents/Investigations interfaces, source-linked viewer/history and a fictional sample attachment;
+updated contracts, dependencies, tests, CI setup and maintenance/recovery documentation. Live ClamAV,
+key management/rotation, private object storage, parser isolation and restore remain production gates.
+
 ## 2026-10-13 — Restore clinic preview
 
 Assigned the clinic preview port 5174 after port 5173 was serving the productivity tool.

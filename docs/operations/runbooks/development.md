@@ -39,6 +39,26 @@ Vite proxies `/api`; for production, configure a protected HTTPS reverse proxy i
 
 ## Acceptance tests
 
+Set TEST_DATABASE_URL to a database ending `_test`. Browser acceptance now includes fictional
+attachments and reported results alongside registry and encounter checks.
+
+## Private attachments and keys
+
+The development launcher generates/reuses `runtime/document-encryption-key.txt` outside Git.
+Preserve it with controlled backups; losing/changing this key prevents old attachments from decrypting.
+On other platforms configure DOCUMENT_ENCRYPTION_KEY as base64 of 32 random bytes.
+Never publish a real key, restore a ciphertext-only backup without its key, or regenerate the key to
+resolve download problems. Key rotation is not implemented.
+
+Direct API uses DOCUMENT_SCAN_MODE=clamav; configure CLAMAV_HOST and CLAMAV_PORT to a trusted private
+daemon, maintain its signatures and allow at least 10 MiB StreamMaxLength. Scanner failure leaves files
+quarantined; Retry scan requires a reason/If-Match. The launcher defaults to synthetic mode for fictional
+files; this mode is visibly unscanned and forbidden in production. Real ClamAV was not tested locally.
+Backups now include document ciphertext and investigation history; a full restore drill remains pending.
+See the Unit 03 guide for byte limits, parser restrictions, tickets, lifecycle and deployment gates.
+
+## Acceptance test details
+
 Set TEST_DATABASE_URL to a database ending `_test`. Pytest creates isolated synthetic clinic scopes and
 rejects patient-database names. It does not truncate databases. Browser acceptance requires running dev
 servers and DEV_AUTH_TOKEN; it creates explicitly fictional records in the development registry.

@@ -20,7 +20,8 @@ in this checkout and is not included. No claim is made that the source blueprint
 | Registration and patient overview | 5 | [Registry workflow](../workflows/registration.md) |
 | Encounters and records lifecycle | 6 | [Unit 02](../units/02-encounters.md), [encounter workflow](../workflows/encounters.md), [ADR-003](../architecture/adr/003-encounter-lifecycle.md) |
 | Medication, growth, vaccines, development | 7–10 | [Rules register](../clinical/rules-register.md), [safety cases](../clinical/safety-cases.md) |
-| Investigations, files, follow-up and AI | 11–13 | Baseline design; implementation planned |
+| Investigations and files | 11 | [Unit 03](../units/03-documents-investigations.md), [workflow](../workflows/documents-investigations.md), [ADR-004](../architecture/adr/004-private-documents.md) |
+| Follow-up and AI | 12–13 | Baseline design; implementation planned |
 | API and security | 14–15 | [API contract](../api/openapi.yaml), [architecture](../architecture/overview.md) |
 | Testing and build order | 16–17, 22 | [Milestones](../milestones.md), [validation report](../test-report.md) |
 | Maintenance, decisions and risks | 18–21 | [Build journal](../build-journal.md), [ADR-001](../architecture/adr/001-stack.md) |

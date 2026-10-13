@@ -1,3 +1,4 @@
+import base64
 import os
 from pathlib import Path
 from uuid import uuid4
@@ -21,7 +22,9 @@ def database_url():
     with psycopg.connect(url) as conn:
         name = conn.execute("SELECT current_database()").fetchone()[0]
         if not name.endswith("_test"):
-            raise RuntimeError("Integration tests require a database name ending in _test")
+            raise RuntimeError(
+                "Integration tests require a database name ending in _test"
+            )
     apply_migrations(url, ROOT / "db/migrations")
     return url
 
@@ -29,7 +32,12 @@ def database_url():
 @pytest.fixture
 def registry(database_url):
     settings = Settings(
-        database_url=database_url, environment="test", dev_token=TOKEN, dev_clinic_id=uuid4()
+        database_url=database_url,
+        environment="test",
+        dev_token=TOKEN,
+        dev_clinic_id=uuid4(),
+        document_key=base64.b64encode(os.urandom(32)).decode(),
+        document_scan_mode="synthetic",
     )
     app = create_app(settings)
     with TestClient(app) as client:
