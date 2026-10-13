@@ -13,7 +13,7 @@
 | Desktop document viewer / mobile investigations | Inspected; mobile action wrapping repaired and no-horizontal-overflow assertion added |
 | Scanner protocol | PASS: controlled TCP fixtures for clean, detection, error and unexpected responses |
 | Live ClamAV signature database, production, parser isolation, backup restore | NOT RUN; local synthetic attachments are explicitly unscanned |
-| Remote GitHub Actions | Pending publication verification |
+| Remote GitHub Actions | PASS: [run 38374033038](https://github.com/ofasseeh94/ClinicSystem/actions/runs/38374033038) for complete commit 365ea21, including backend, frontend and all three browser workflows |
 
 Commands: documented root checks, Pytest with TEST_DATABASE_URL, typecheck/build and browser acceptance
 with the clinic API/web on 8000/5174. Dependencies added: pypdf 6.20.1 and Pillow 12.3.0; crypto remains
@@ -28,6 +28,9 @@ Upstream TestClient and the pypdf active-content fixture helper produce deprecat
 The scanner fixtures do not claim actual malware detection. Ciphertext/key backup restore, real scanner
 deployment/signature maintenance, quotas/retention, managed keys/rotation, parser sandboxing and live
 identity remain production gates. No real patient attachments or clinical interpretation were used.
+Publication correction: the first source push omitted migration 004 and its run failed. The immediate
+follow-up included the locally tested SQL; [complete commit 365ea21](https://github.com/ofasseeh94/ClinicSystem/commit/365ea21541091124c0754648a75e2c1afd05e207)
+passed the full GitHub workflow on Python 3.12 / Node 22 / PostgreSQL 17.11.
 
 ## 2026-10-11 — Unit 02 encounters
 

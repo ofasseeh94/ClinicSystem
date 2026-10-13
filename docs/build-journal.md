@@ -364,6 +364,11 @@ will be recorded after the repository push and remote checks.
 Initial source commit: [75a064f](https://github.com/ofasseeh94/ClinicSystem/commit/75a064f9b682b1f7725786589ab85bf89ba58cd9).
 The first staging list omitted the locally tested migration 004. Caught the untracked SQL after push
 and added it in the immediate follow-up; remote validation must use the complete follow-up commit.
+Complete publication: [365ea21](https://github.com/ofasseeh94/ClinicSystem/commit/365ea21541091124c0754648a75e2c1afd05e207).
+[Run 38374033038](https://github.com/ofasseeh94/ClinicSystem/actions/runs/38374033038) passed all backend,
+frontend and browser checks. The preceding incomplete push failed; this successful run supersedes it.
+A documentation-only follow-up records the result. Local preview/API readiness and retained attachment
+decryption passed; the repository is synchronized with GitHub after final publication.
 
 ## Template for every future build step
 
