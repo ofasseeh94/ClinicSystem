@@ -361,6 +361,9 @@ No OCR/AI extraction, external lab messaging, automatic interpretation, clinical
 Next: baseline M4 medication knowledge/drug safety foundation needs verified clinical/catalog sources
 and independent validation before dose calculations or prescribing can be enabled. Publication evidence
 will be recorded after the repository push and remote checks.
+Initial source commit: [75a064f](https://github.com/ofasseeh94/ClinicSystem/commit/75a064f9b682b1f7725786589ab85bf89ba58cd9).
+The first staging list omitted the locally tested migration 004. Caught the untracked SQL after push
+and added it in the immediate follow-up; remote validation must use the complete follow-up commit.
 
 ## Template for every future build step
 
