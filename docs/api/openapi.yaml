@@ -2346,6 +2346,706 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/ProblemResponse'
+  /v1/medication-capabilities:
+    get:
+      tags:
+      - Medication foundation
+      summary: Capabilities
+      operationId: capabilities_v1_medication_capabilities_get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Capabilities'
+        '400':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '401':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '403':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '404':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '409':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '412':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '422':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '428':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '503':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+  /v1/medication-catalog:
+    get:
+      tags:
+      - Medication foundation
+      summary: Catalog List
+      operationId: catalog_list_v1_medication_catalog_get
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 1000000
+          minimum: 1
+          default: 1
+          title: Page
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogPage'
+        '400':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '401':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '403':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '404':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '409':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '412':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '422':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '428':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '503':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+    post:
+      tags:
+      - Medication foundation
+      summary: Create Catalog
+      operationId: create_catalog_v1_medication_catalog_post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CatalogInput'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogRecord'
+        '400':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '401':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '403':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '404':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '409':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '412':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '422':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '428':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '503':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+  /v1/medication-catalog/{catalog_id}/versions:
+    post:
+      tags:
+      - Medication foundation
+      summary: Version
+      operationId: version_v1_medication_catalog__catalog_id__versions_post
+      parameters:
+      - name: catalog_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Catalog Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CatalogInput'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogRecord'
+        '400':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '401':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '403':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '404':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '409':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '412':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '422':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '428':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '503':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+  /v1/medication-catalog/versions/{version_id}/status:
+    post:
+      tags:
+      - Medication foundation
+      summary: Review
+      operationId: review_v1_medication_catalog_versions__version_id__status_post
+      parameters:
+      - name: version_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Version Id
+      - name: if-match
+        in: header
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: If-Match
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CatalogTransition'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CatalogRecord'
+        '400':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '401':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '403':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '404':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '409':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '412':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '422':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '428':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '503':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+  /v1/patients/{patient_id}/medications:
+    get:
+      tags:
+      - Medication foundation
+      summary: History
+      operationId: history_v1_patients__patient_id__medications_get
+      parameters:
+      - name: patient_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Patient Id
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+          maximum: 1000000
+          minimum: 1
+          default: 1
+          title: Page
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatementPage'
+        '400':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '401':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '403':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '404':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '409':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '412':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '422':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '428':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '503':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+    post:
+      tags:
+      - Medication foundation
+      summary: Record History
+      operationId: record_history_v1_patients__patient_id__medications_post
+      parameters:
+      - name: patient_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Patient Id
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StatementInput'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatementRecord'
+        '400':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '401':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '403':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '404':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '409':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '412':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '422':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '428':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '503':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+  /v1/patients/{patient_id}/medications/calculate:
+    post:
+      tags:
+      - Medication foundation
+      summary: Calculate
+      operationId: calculate_v1_patients__patient_id__medications_calculate_post
+      parameters:
+      - name: patient_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Patient Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '400':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '401':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '403':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '404':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '409':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '412':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '422':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '428':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '503':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+  /v1/patients/{patient_id}/medications/prescribe:
+    post:
+      tags:
+      - Medication foundation
+      summary: Prescribe
+      operationId: prescribe_v1_patients__patient_id__medications_prescribe_post
+      parameters:
+      - name: patient_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+          title: Patient Id
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '400':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '401':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '403':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '404':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '409':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '412':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '422':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '428':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
+        '503':
+          description: Problem response; supplied values are never echoed
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemResponse'
 components:
   schemas:
     Addendum:
@@ -2471,6 +3171,290 @@ components:
       - created_by
       - schema_definition
       title: BackgroundResponse
+    Capabilities:
+      properties:
+        dose_calculation_enabled:
+          type: boolean
+          title: Dose Calculation Enabled
+          default: false
+        prescribing_enabled:
+          type: boolean
+          title: Prescribing Enabled
+          default: false
+        verification_scope:
+          type: string
+          title: Verification Scope
+          default: catalog_identity_only
+        prerequisites:
+          items:
+            type: string
+          type: array
+          title: Prerequisites
+          default:
+          - Approved pediatric dose sources
+          - Independent clinical/pharmacist verification
+          - Validated dose/max/interaction rules and fixtures
+          - Clinical and production release review
+      additionalProperties: false
+      type: object
+      title: Capabilities
+    CatalogInput:
+      properties:
+        request_id:
+          type: string
+          format: uuid
+          title: Request Id
+        product_name:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Product Name
+        generic_name:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Generic Name
+        formulation:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Formulation
+        strength_text:
+          type: string
+          maxLength: 500
+          minLength: 1
+          title: Strength Text
+        route_text:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Route Text
+        source_kind:
+          type: string
+          enum:
+          - synthetic
+          - regulatory_label
+          - formulary
+          title: Source Kind
+        source_title:
+          type: string
+          maxLength: 500
+          minLength: 1
+          title: Source Title
+        source_publisher:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Source Publisher
+        source_version:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Source Version
+        source_url:
+          type: string
+          maxLength: 2000
+          title: Source Url
+          default: ''
+        source_country:
+          type: string
+          maxLength: 80
+          minLength: 2
+          title: Source Country
+        source_checked_on:
+          type: string
+          format: date
+          title: Source Checked On
+      additionalProperties: false
+      type: object
+      required:
+      - request_id
+      - product_name
+      - generic_name
+      - formulation
+      - strength_text
+      - route_text
+      - source_kind
+      - source_title
+      - source_publisher
+      - source_version
+      - source_country
+      - source_checked_on
+      title: CatalogInput
+    CatalogPage:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/CatalogRecord'
+          type: array
+          title: Items
+        total:
+          type: integer
+          title: Total
+        page:
+          type: integer
+          title: Page
+      additionalProperties: false
+      type: object
+      required:
+      - items
+      - total
+      - page
+      title: CatalogPage
+    CatalogRecord:
+      properties:
+        request_id:
+          type: string
+          format: uuid
+          title: Request Id
+        product_name:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Product Name
+        generic_name:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Generic Name
+        formulation:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Formulation
+        strength_text:
+          type: string
+          maxLength: 500
+          minLength: 1
+          title: Strength Text
+        route_text:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Route Text
+        source_kind:
+          type: string
+          enum:
+          - synthetic
+          - regulatory_label
+          - formulary
+          title: Source Kind
+        source_title:
+          type: string
+          maxLength: 500
+          minLength: 1
+          title: Source Title
+        source_publisher:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Source Publisher
+        source_version:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Source Version
+        source_url:
+          type: string
+          maxLength: 2000
+          title: Source Url
+          default: ''
+        source_country:
+          type: string
+          maxLength: 80
+          minLength: 2
+          title: Source Country
+        source_checked_on:
+          type: string
+          format: date
+          title: Source Checked On
+        id:
+          type: string
+          format: uuid
+          title: Id
+        catalog_id:
+          type: string
+          format: uuid
+          title: Catalog Id
+        version:
+          type: integer
+          title: Version
+        state:
+          type: string
+          title: State
+        revision:
+          type: integer
+          title: Revision
+        created_by:
+          type: string
+          title: Created By
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        reviewed_by:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Reviewed By
+        reviewed_at:
+          anyOf:
+          - type: string
+            format: date-time
+          - type: 'null'
+          title: Reviewed At
+        review_reason:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Review Reason
+      additionalProperties: false
+      type: object
+      required:
+      - request_id
+      - product_name
+      - generic_name
+      - formulation
+      - strength_text
+      - route_text
+      - source_kind
+      - source_title
+      - source_publisher
+      - source_version
+      - source_country
+      - source_checked_on
+      - id
+      - catalog_id
+      - version
+      - state
+      - revision
+      - created_by
+      - created_at
+      - reviewed_by
+      - reviewed_at
+      - review_reason
+      title: CatalogRecord
+    CatalogTransition:
+      properties:
+        state:
+          type: string
+          enum:
+          - draft
+          - in_review
+          - verified_identity
+          - retired
+          title: State
+        reason:
+          type: string
+          maxLength: 1000
+          minLength: 5
+          title: Reason
+      additionalProperties: false
+      type: object
+      required:
+      - state
+      - reason
+      title: CatalogTransition
     DocumentCreate:
       properties:
         request_id:
@@ -3743,6 +4727,183 @@ components:
       - roles
       - environment
       title: SessionResponse
+    StatementInput:
+      properties:
+        request_id:
+          type: string
+          format: uuid
+          title: Request Id
+        encounter_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Encounter Id
+        catalog_version_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Catalog Version Id
+        supersedes_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Supersedes Id
+        medication_name:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Medication Name
+        reported_instructions:
+          type: string
+          maxLength: 2000
+          title: Reported Instructions
+          default: ''
+        use_status:
+          type: string
+          enum:
+          - active
+          - stopped
+          - completed
+          - unknown
+          title: Use Status
+          default: unknown
+        recorded_for:
+          type: string
+          format: date-time
+          title: Recorded For
+        source:
+          type: string
+          maxLength: 500
+          minLength: 1
+          title: Source
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 5
+          title: Reason
+      additionalProperties: false
+      type: object
+      required:
+      - request_id
+      - medication_name
+      - recorded_for
+      - source
+      - reason
+      title: StatementInput
+    StatementPage:
+      properties:
+        items:
+          items:
+            $ref: '#/components/schemas/StatementRecord'
+          type: array
+          title: Items
+        total:
+          type: integer
+          title: Total
+        page:
+          type: integer
+          title: Page
+      additionalProperties: false
+      type: object
+      required:
+      - items
+      - total
+      - page
+      title: StatementPage
+    StatementRecord:
+      properties:
+        request_id:
+          type: string
+          format: uuid
+          title: Request Id
+        encounter_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Encounter Id
+        catalog_version_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Catalog Version Id
+        supersedes_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Supersedes Id
+        medication_name:
+          type: string
+          maxLength: 160
+          minLength: 1
+          title: Medication Name
+        reported_instructions:
+          type: string
+          maxLength: 2000
+          title: Reported Instructions
+          default: ''
+        use_status:
+          type: string
+          enum:
+          - active
+          - stopped
+          - completed
+          - unknown
+          title: Use Status
+          default: unknown
+        recorded_for:
+          type: string
+          format: date-time
+          title: Recorded For
+        source:
+          type: string
+          maxLength: 500
+          minLength: 1
+          title: Source
+        reason:
+          type: string
+          maxLength: 500
+          minLength: 5
+          title: Reason
+        id:
+          type: string
+          format: uuid
+          title: Id
+        patient_id:
+          type: string
+          format: uuid
+          title: Patient Id
+        created_by:
+          type: string
+          title: Created By
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        corrected_by_id:
+          anyOf:
+          - type: string
+            format: uuid
+          - type: 'null'
+          title: Corrected By Id
+      additionalProperties: false
+      type: object
+      required:
+      - request_id
+      - medication_name
+      - recorded_for
+      - source
+      - reason
+      - id
+      - patient_id
+      - created_by
+      - created_at
+      title: StatementRecord
     Ticket:
       properties:
         ticket:

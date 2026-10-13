@@ -21,6 +21,10 @@ erDiagram
   FORM_DEFINITIONS ||--o{ FORM_RESPONSES : exact_version
   PATIENTS ||--o{ IDEMPOTENCY_KEYS : created_by_request
   PATIENTS ||--o{ AUDIT_EVENTS : optional_record_reference
+  PATIENTS ||--o{ MEDICATION_STATEMENTS : reported_history
+  ENCOUNTERS o|--o{ MEDICATION_STATEMENTS : optional_visit
+  MEDICATION_CATALOG o|--o{ MEDICATION_STATEMENTS : identity_version
+  MEDICATION_STATEMENTS o|--o| MEDICATION_STATEMENTS : correction
 ```
 
 Patient/contact/alias/allergy/response/idempotency foreign keys include clinic scope.

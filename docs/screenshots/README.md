@@ -1,5 +1,9 @@
 # Unit 01 visual verification
 
+Unit 04A evidence: [catalog versions/review state](unit-04-catalog.png),
+[mobile reported history/corrections](unit-04-history-mobile.png). Fictional records have no clinical
+strength or administration instructions; calculation/prescribing controls remain unavailable.
+
 Unit 03 evidence: [desktop documents/viewer](unit-03-documents.png),
 [mobile investigations/correction history](unit-03-investigations-mobile.png).
 The sample image and reported text are fictional; development attachments are explicitly unscanned.

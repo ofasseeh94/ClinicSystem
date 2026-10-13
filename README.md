@@ -4,6 +4,8 @@ Repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem
 [Design baseline](docs/design/README.md) · [Documentation index](docs/00-index.md) · [Build journal](docs/build-journal.md)
 
 Units 01–03: a PostgreSQL-backed clinic record for **synthetic development data**.
+Unit 04A adds reported medication history/corrections and a versioned catalog identity/source-review
+foundation. Dose calculations and prescribing remain disabled; baseline M4 is not yet complete.
 Register patients and guardians, search Arabic/English names and aliases, review duplicate candidates,
 reopen an overview, correct identity details with a reason, and append versioned medical/birth background.
 Unknown allergy history remains explicit. Open Encounters for dated visits, notes, raw measurements,
@@ -71,6 +73,8 @@ See [test report](docs/test-report.md), [Unit 01 guide](docs/units/01-patient-re
 The [Unit 02 guide](docs/units/02-encounters.md) explains encounter use, storage, edits and recovery.
 The [Unit 03 guide](docs/units/03-documents-investigations.md) explains attachments, investigations,
 scanning states and encryption-key preservation. Try the fictional sample in the Documents tab.
+The [Unit 04A guide](docs/units/04-medication-foundation.md) explains medication history, catalog
+review/versioning and the source/clinical prerequisites before drug calculations can be enabled.
 
 ## Production prerequisites
 

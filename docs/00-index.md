@@ -5,6 +5,8 @@
 - [Unit 01: registry implementation and modification guide](units/01-patient-registry.md)
 - [Unit 02: encounter implementation and modification guide](units/02-encounters.md)
 - [Unit 03: documents/investigations implementation and modification guide](units/03-documents-investigations.md)
+- [Unit 04A: medication foundation and remaining M4 prerequisites](units/04-medication-foundation.md)
+- [ADR-005: medication source and clinical gates](architecture/adr/005-medication-source-gates.md)
 - [Documents/investigations workflow](workflows/documents-investigations.md)
 - [ADR-004: private attachments and reported results](architecture/adr/004-private-documents.md)
 - [Encounter workflow](workflows/encounters.md)

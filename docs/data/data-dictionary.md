@@ -1,4 +1,9 @@
-# Clinic data dictionary — Units 01–03
+# Clinic data dictionary — implemented foundations
+
+Unit 04A / migration [005](../../db/migrations/005_medication_foundation.sql): `medication_catalog`
+stores immutable catalog/source content versions, independent optimistic review revisions and review
+actor/time/reason. `medication_statements` stores immutable reported use/source/time/optional links and
+correction chains. Catalog identity review does not approve clinical rules; no prescriptions/dose rules exist.
 
 Source of truth: PostgreSQL migrations [001](../../db/migrations/001_registry.sql), [002](../../db/migrations/002_background_v2.sql) and [003](../../db/migrations/003_encounters.sql).
 All patient-domain tables carry `clinic_id`; composite foreign keys prevent cross-clinic links.

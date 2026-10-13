@@ -11,6 +11,8 @@ Repository: local Git repository at `G:/My Drive/Work/Pediatrics/ClinicSystem-AI
 Remote repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem), public.
 The initial source/documentation upload completed; `main` tracks `origin/main`. See Step 004.
 Current milestone: M3 / Unit 03 documents/investigations tested with synthetic data. M0 local build blockers resolved.
+Unit 04A medication catalog/history foundation is tested; baseline M4 drug safety remains partial
+pending reference selection, independent clinical rules and validation. No calculation or prescribing enabled.
 Registry, encounters, raw measurements, encrypted attachments and investigation records are implemented.
 Live malware scanning, later clinical modules and production gates remain open.
 
@@ -384,6 +386,60 @@ requested key, invalid-key rejection and API readiness checked; existing securit
 No patient data, migrations, document encryption key or API contract changed. To adjust later,
 change DEV_AUTH_TOKEN in the ignored `.env`, then restart the clinic servers. No database recovery
 is required; an existing browser session using the old key must sign in again.
+
+## Step 011 — Build Unit 04A: medication source/catalog and reported history
+
+Date: 2026-10-13. Outcome: foundation TESTED for synthetic development; M4 remains PARTIAL.
+Extends prior clinical record units without introducing a dose, drug rule or prescription.
+
+### Purpose, sequence and decisions
+
+1. Read the baseline M4 design, journal and empty clinical rule register. Requested the user's preferred
+   pediatric reference/database versus public label metadata; selection remains pending. No actual medication
+   identity/dose/reference content was imported. Public provenance limitations were researched in primary NLM/FDA sources.
+2. Added migration 005 for immutable source/catalog content versions, versioned independent identity review
+   states, and immutable reported medication statements with append-only correction chains.
+3. Added typed API input/output, HTTPS/no-credentials citation validation, reference date checks, role/clinic/
+   patient/encounter enforcement, transaction/replay/version controls and before/after audit.
+4. Separated identity review from clinical approval. Verification needs a cited nonsynthetic source, a distinct
+   qualified managed clinical_reviewer identity and an audit reason. Local keys cannot verify identity.
+5. Added capability flags and authenticated/audited calculation/prescribing endpoints that return unavailable,
+   consume no clinical calculation input and create no prescription. Identity review cannot unlock them.
+6. Built Medications reported-history/correction and catalog/source/version/review screens, with pagination,
+   explicit unknowns, missing instructions and unsaved entry safeguards. Source texts are unparsed and never computed.
+7. Regenerated contracts and added PostgreSQL/source/security/browser tests and fictional visual evidence.
+   Updated architecture, rules/safety register, design map, milestones and complete modification documentation.
+
+### Exact changes and later editing
+
+See [Unit 04A](units/04-medication-foundation.md) for the complete file manifest, data flow and ownership map.
+[ADR-005](architecture/adr/005-medication-source-gates.md) explains the source/review/clinical separation.
+Adjust field validation in medications schemas/shared types/screens, identity/replay/history transactions
+in the service, endpoint/capability policy in routes, and role assignment in auth. Keep the API gate while
+clinical prerequisites are unmet; do not enable it merely because a catalog identity was reviewed.
+
+### Verification and impact
+
+46 Python tests pass with actual PostgreSQL 17.11; Ruff/structure, TypeScript/Vite and four browser flows pass.
+Desktop catalog and mobile history screenshots inspected; overflow assertion passed. Tested immutable catalog
+and history, version/retry/branch conflicts, reviewer independence, synthetic/local-key restrictions, source
+scheme/credential validation, scope/roles, missing/stale If-Match and clinical gates after identity verification.
+Injected test reviewers and .example source URLs are workflow fixtures, not approved medical knowledge.
+The [test report](test-report.md) preserves results and limits. Upstream deprecation warnings remain.
+
+Migration 005 is additive and applied to development/test DBs. Existing patients, encounters, attachment
+ciphertext/key and previous migrations remain unchanged. Do not edit applied SQL. Corrections append
+records/versions; no destructive rollback or restore claim is supplied. Preserve DB backups for recovery.
+The chosen development access key remains local in ignored configuration, and the preview stays on 5174.
+
+### Required to complete M4
+
+The source question remains pending. Need approved/versioned/licensed pediatric reference and jurisdiction,
+independent pharmacist/clinical verification, validated units/concentrations/rule math, maximum/cumulative
+dose and interactions, uncertain-age/stale-weight/allergy/renal handling, independent clinical fixtures and
+a reviewed prescription/signature lifecycle. No such calculations, rules or orders exist in this build.
+This is a completed foundation step, not completed M4 or a production/clinical release.
+Publication and remote checks will be recorded after pushing the complete source/migration set.
 
 ## Template for every future build step
 

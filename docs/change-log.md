@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-10-13 — Unit 04A: medication identity/history foundation
+
+Added migration 005, immutable catalog content versions with source metadata and independent identity
+review, and reported medication history/corrections. Added clinical_reviewer permissions, source/date/
+link validation, retry/version/audit controls, Medications screens and explicit API/UI gates for dose
+calculation/prescribing. M4 remains partial: source choice, verified clinical rules/calculator and
+prescription lifecycle require further clinical/reference work. No real medicine/dose rules imported.
+
 ## 2026-10-13 — Custom local development access key
 
 Allowed custom development keys of at least eight characters and configured the user's requested

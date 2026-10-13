@@ -15,6 +15,7 @@ from .config import Settings
 from .database import connect
 from .encounters.routes import router as encounters_router
 from .errors import Problem, problem_response
+from .medications.routes import router as medications_router
 from .records.routes import router as records_router
 from .registry.routes import router
 
@@ -149,7 +150,7 @@ def create_app(settings: Settings | None = None):
                 from psycopg.errors import UndefinedTable
 
                 count = conn.execute("SELECT count(*) AS n FROM schema_migrations").fetchone()["n"]
-                if count < 4:
+                if count < 5:
                     raise Problem(503, "migration_required", "Registry migrations must be applied.")
             except UndefinedTable:
                 raise Problem(
@@ -167,6 +168,7 @@ def create_app(settings: Settings | None = None):
     app.include_router(router)
     app.include_router(encounters_router)
     app.include_router(records_router)
+    app.include_router(medications_router)
     default_openapi = app.openapi
 
     def documented_schema():

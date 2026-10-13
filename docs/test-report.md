@@ -1,5 +1,26 @@
 # Validation report
 
+## 2026-10-13 — Unit 04A medication foundation (M4 partial)
+
+| Check | Result |
+| --- | --- |
+| Pytest | PASS: 46 tests on actual PostgreSQL 17.11, including seven new medication workflow/source-validation cases |
+| Ruff/structure | PASS |
+| TypeScript / Vite bundle | PASS |
+| Playwright | PASS: four workflows, including reported-history corrections, catalog v1/v2 and clinical gates |
+| Migration 005 / readiness | PASS: additive migration applied locally; earlier checksums preserved |
+| Desktop catalog / mobile history screenshots | Inspected; mobile overflow assertion passed |
+| Actual source import, clinical dose/maximum/interaction validation, prescriptions | NOT IMPLEMENTED / NOT RUN; no approved pediatric reference selected |
+| Remote CI | Pending publication verification |
+
+Tests simulate source identity review with .example URLs and injected reviewer identities; they do not
+establish clinical approval or licensed drug data. Checked replay/conflict, independent author/reviewer,
+synthetic/local-key approval blocks, immutable content/history, append-only correction chains, source URL
+constraints, role/clinic/patient access, stale/missing review revisions and calculation/prescribing remaining
+blocked after identity verification. Blocked attempts are audited and create no clinical order/history.
+Existing units pass. Previous upstream TestClient/pypdf fixture deprecation warnings remain.
+Commands and NTFS Python/Node/PostgreSQL environment follow the earlier unit reports.
+
 ## 2026-10-13 — Unit 03 documents and investigations
 
 | Check | Result |

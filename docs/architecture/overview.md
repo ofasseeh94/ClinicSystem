@@ -31,5 +31,8 @@ withdrawal history, investigation requests, source-attributed results and immuta
 The first private storage backend is PostgreSQL ciphertext; future object storage is documented in ADR-004.
 Missing malware scanning quarantines attachments; the local synthetic mode is explicit and forbidden in production.
 Clinical rules, notifications, parent access and AI remain planned.
+Unit 04A adds immutable catalog identity versions with source metadata/independent review and
+reported medication history with retained corrections. Identity review is separate from clinical
+rule approval; capability flags and API endpoints keep calculation/prescribing unavailable (ADR-005).
 No prescribing, growth reference calculations or vaccination recommendations exist. TLS/encryption,
 restricted DB role, external audit integrity, backup/restore, privacy review and clinical sign-off remain release gates.

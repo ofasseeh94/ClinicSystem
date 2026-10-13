@@ -20,6 +20,7 @@ in this checkout and is not included. No claim is made that the source blueprint
 | Registration and patient overview | 5 | [Registry workflow](../workflows/registration.md) |
 | Encounters and records lifecycle | 6 | [Unit 02](../units/02-encounters.md), [encounter workflow](../workflows/encounters.md), [ADR-003](../architecture/adr/003-encounter-lifecycle.md) |
 | Medication, growth, vaccines, development | 7–10 | [Rules register](../clinical/rules-register.md), [safety cases](../clinical/safety-cases.md) |
+| Medication foundation / remaining drug safety | 7, M4 | [Unit 04A](../units/04-medication-foundation.md), [ADR-005](../architecture/adr/005-medication-source-gates.md); calculators remain gated |
 | Investigations and files | 11 | [Unit 03](../units/03-documents-investigations.md), [workflow](../workflows/documents-investigations.md), [ADR-004](../architecture/adr/004-private-documents.md) |
 | Follow-up and AI | 12–13 | Baseline design; implementation planned |
 | API and security | 14–15 | [API contract](../api/openapi.yaml), [architecture](../architecture/overview.md) |
