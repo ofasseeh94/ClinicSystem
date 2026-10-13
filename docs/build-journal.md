@@ -10,8 +10,8 @@ Last updated: 2026-10-13 (clinic timezone: Africa/Cairo).
 Repository: local Git repository at `G:/My Drive/Work/Pediatrics/ClinicSystem-AI`.
 Remote repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem), public.
 The initial source/documentation upload completed; `main` tracks `origin/main`. See Step 004.
-Current milestone: M3 / Unit 03 documents/investigations tested with synthetic data. M0 local build blockers resolved.
-Unit 04A medication catalog/history foundation is tested; baseline M4 drug safety remains partial
+Current milestone: M4 / Unit 04A medication catalog/history foundation tested with synthetic data.
+M0 local build blockers resolved. Baseline M4 drug safety remains partial
 pending reference selection, independent clinical rules and validation. No calculation or prescribing enabled.
 Registry, encounters, raw measurements, encrypted attachments and investigation records are implemented.
 Live malware scanning, later clinical modules and production gates remain open.
@@ -440,6 +440,10 @@ dose and interactions, uncertain-age/stale-weight/allergy/renal handling, indepe
 a reviewed prescription/signature lifecycle. No such calculations, rules or orders exist in this build.
 This is a completed foundation step, not completed M4 or a production/clinical release.
 Publication and remote checks will be recorded after pushing the complete source/migration set.
+Publication: [commit 9ee8c7d](https://github.com/ofasseeh94/ClinicSystem/commit/9ee8c7db1f7d188d38eb9bdbc00b1ebdd9e24130).
+[Run 38386585714](https://github.com/ofasseeh94/ClinicSystem/actions/runs/38386585714) passed all checks,
+including 46 Python tests, frontend build and four browser workflows. Local readiness returned ok.
+A documentation-only follow-up records this result; source and migration were included together.
 
 ## Template for every future build step
 

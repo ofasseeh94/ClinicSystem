@@ -11,7 +11,7 @@
 | Migration 005 / readiness | PASS: additive migration applied locally; earlier checksums preserved |
 | Desktop catalog / mobile history screenshots | Inspected; mobile overflow assertion passed |
 | Actual source import, clinical dose/maximum/interaction validation, prescriptions | NOT IMPLEMENTED / NOT RUN; no approved pediatric reference selected |
-| Remote CI | Pending publication verification |
+| Remote CI | PASS: [run 38386585714](https://github.com/ofasseeh94/ClinicSystem/actions/runs/38386585714), including 46 Python tests, frontend checks and four browser flows |
 
 Tests simulate source identity review with .example URLs and injected reviewer identities; they do not
 establish clinical approval or licensed drug data. Checked replay/conflict, independent author/reviewer,
@@ -19,6 +19,9 @@ synthetic/local-key approval blocks, immutable content/history, append-only corr
 constraints, role/clinic/patient access, stale/missing review revisions and calculation/prescribing remaining
 blocked after identity verification. Blocked attempts are audited and create no clinical order/history.
 Existing units pass. Previous upstream TestClient/pypdf fixture deprecation warnings remain.
+Published code: [9ee8c7d](https://github.com/ofasseeh94/ClinicSystem/commit/9ee8c7db1f7d188d38eb9bdbc00b1ebdd9e24130).
+Remote environment: Python 3.12 / Node 22 / PostgreSQL 17.11. These are software foundation results,
+not verified-source import or clinical drug-safety acceptance; M4 remains partial.
 Commands and NTFS Python/Node/PostgreSQL environment follow the earlier unit reports.
 
 ## 2026-10-13 — Unit 03 documents and investigations
