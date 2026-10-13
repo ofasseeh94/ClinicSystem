@@ -370,6 +370,21 @@ frontend and browser checks. The preceding incomplete push failed; this successf
 A documentation-only follow-up records the result. Local preview/API readiness and retained attachment
 decryption passed; the repository is synchronized with GitHub after final publication.
 
+## Step 010 — Configure a custom development access key
+
+Date: 2026-10-13. Purpose: use the user's requested local development key across restarts.
+Changed `services/api/src/clinic_api/config.py` to accept development keys of at least eight
+characters, updated `README.md` setup guidance, and recorded the change in `docs/change-log.md`
+and this journal. The actual key is configured only in the ignored `.env` and local runtime key file.
+It is not included in Git or this document. Default generated keys remain long random values;
+production continues to reject all development keys and require managed authentication.
+
+Restarted clinic API/web using the launcher. Verification: authenticated session access with the
+requested key, invalid-key rejection and API readiness checked; existing security tests and lint run.
+No patient data, migrations, document encryption key or API contract changed. To adjust later,
+change DEV_AUTH_TOKEN in the ignored `.env`, then restart the clinic servers. No database recovery
+is required; an existing browser session using the old key must sign in again.
+
 ## Template for every future build step
 
 Append a numbered entry; retain prior entries. If an earlier implementation is changed, add a new

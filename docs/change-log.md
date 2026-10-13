@@ -1,5 +1,11 @@
 # Change log
 
+## 2026-10-13 — Custom local development access key
+
+Allowed custom development keys of at least eight characters and configured the user's requested
+key in ignored local settings. Default generated keys remain random; production still rejects
+development authentication. No actual access key was added to repository documentation.
+
 ## 2026-10-13 — Unit 03: documents and investigations
 
 Added migration 004, encrypted private attachments with original hashes and bounded format validation,

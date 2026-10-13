@@ -35,8 +35,8 @@ class Settings:
                 raise ValueError("Document encryption key must encode 32 bytes") from exc
         if self.environment not in {"development", "test", "production"}:
             raise ValueError("Unsupported application environment")
-        if self.dev_token and len(self.dev_token) < 32:
-            raise ValueError("Development token must contain at least 32 characters")
+        if self.dev_token and len(self.dev_token) < 8:
+            raise ValueError("Development token must contain at least 8 characters")
         if self.environment == "production":
             if self.dev_token:
                 raise ValueError("Development authentication is forbidden in production")
