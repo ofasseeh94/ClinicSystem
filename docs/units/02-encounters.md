@@ -1,7 +1,8 @@
 # Unit 02 — encounters and dated measurements
 
-Entry point: open a patient, then **Encounters**. Start a dated visit with its reason and
-consent context; enter history, examination, assessment and plan; record allergy/medication
+Entry point: choose **Register and start visit** during registration, or open a patient and select
+**Visit workspace** / **Encounters**. Registration is saved first; the visit is saved separately. Start a dated visit with its reason and
+consent context; enter history, examination, provisional diagnosis / assessment and plan in the same form; record allergy/medication
 review and optional dated measurements. Save the draft with a reason, submit for review,
 then sign with a reason. Return a review to draft to revise it. Cancel an unsigned visit
 with a reason. Signed visits accept separately signed addenda, never replacements.
@@ -95,3 +96,26 @@ Backup restore has not been tested; real data remains outside this development s
 Existing dependency versions and CI commands are reused. No prescription, investigation, document,
 growth reference, vaccination, AI or parent feature is implemented here. Clinical review, consent/
 authority administration, production identity/security and operational release gates remain open.
+
+## 2026-10-17: direct registration-to-visit workflow
+
+The registration shortcut opens a new visit form without another tab or Start visit click.
+Registration-only remains available for administrative intake. Clinician/admin roles see the shortcut;
+API encounter permissions remain authoritative. Existing patients use Visit workspace then Start visit.
+The full initial note and review selections are saved atomically with the new encounter at draft v1.
+Measurements can be added after that first save, in the same workspace. A draft may be incomplete;
+review/signing requirements and immutable final notes are unchanged. Nothing auto-fills clinical text.
+
+The UI's provisional diagnosis is stored in the existing `note.assessment` narrative field; it is not
+an ICD-coded condition or a confirmed diagnosis. Chief complaint maps to existing encounter `reason`.
+No migration is needed. Older POST bodies without `note` still work. Empty notes retain the old retry
+hash; nonempty notes participate in the hash, so changing note content requires a new request UUID.
+On an ambiguous network failure retry unchanged entries; check the timeline before creating a replacement.
+Do not roll back the API before resolving pending initial-note requests: the older schema rejects them.
+Registration stays saved if a visit is discarded or its save fails. Unsaved visit text is memory-only.
+
+Modification map: App.tsx passes registration intent; PatientForm.tsx offers both registration actions;
+PatientOverview.tsx consumes the intent once and exposes the shortcut; Encounters.tsx contains labels,
+initial-note state and save/dirty handling. API encounter schemas/service validate/store/replay initial
+notes with the existing transaction/audit. Keep shared TypeScript and generated OpenAPI in sync.
+See build-journal Step 012 for the exact change manifest and actual checks.

@@ -11,3 +11,6 @@
 
 TESTED refers to the executable development acceptance suite. No unit is CLINICALLY_VALIDATED
 or PRODUCTION_READY. Remote Actions results are recorded separately in the validation report.
+
+2026-10-17 usability follow-up: direct registration-to-visit navigation and a single initial visit-note
+form added to M1/M2. No new clinical milestone or production validation claimed; see journal Step 012.

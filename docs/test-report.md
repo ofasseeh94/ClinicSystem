@@ -1,5 +1,24 @@
 # Validation report
 
+## 2026-10-17 — Direct registration and single-form visit documentation
+
+- PASS: 47 Python tests with actual PostgreSQL, including initial-note persistence, unchanged retry,
+  changed-content conflict, invalid-note rejection without a new encounter and legacy empty-note retry.
+- PASS: Ruff, repository structure, TypeScript typecheck and Vite build.
+- PASS: all five Playwright workflows (17.4 seconds). New flow covers Register and start visit,
+  initial complaint/history/examination/provisional diagnosis/plan, dirty navigation protection,
+  first-save persistence, reopening and consumption of the one-time registration navigation intent.
+- PASS: mobile no-horizontal-overflow assertion; desktop/mobile screenshots visually inspected.
+- Local servers restarted on 8000/5174; existing migration checksums verified. No migration added.
+- Environment: existing NTFS Python 3.14 / Node 24 / PostgreSQL 17; same commands as README.
+  Two existing upstream TestClient/pypdf fixture deprecation warnings remain.
+- Remote CI: pending publication at the time of local verification; results will be linked when known.
+
+Limits: registration saves before the visit form opens. A failed/discarded visit keeps the patient.
+Unsaved visit text stays in memory; measurements are added after first save in the same workspace.
+Provisional diagnosis remains narrative assessment, with no diagnostic code or clinical rules added.
+These are synthetic software checks; no production or clinical validation is claimed.
+
 ## 2026-10-13 — Unit 04A medication foundation (M4 partial)
 
 | Check | Result |

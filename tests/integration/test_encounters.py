@@ -294,3 +294,26 @@ def test_cairo_date_age_and_concurrent_start(registry, headers, patient_data):
     assert results[0].json()["birth_context"]["age_days"] == 0
     assert client.get(base, headers=headers).json()["total"] == 1
     assert client.get(base).status_code == 401
+
+
+def test_initial_note_is_atomic_validated_and_replayed(registry, headers, patient_data):
+    client, settings, p, base, data, original = setup_visit(registry, headers, patient_data)
+    data["request_id"] = str(uuid4())
+    data["note"] = content()["note"]
+    created = client.post(base, headers=headers, json=data)
+    assert created.status_code == 201
+    record = created.json()
+    assert record["note"] == data["note"]
+    assert record["version"] == 1 and record["status"] == "draft"
+    assert client.get(f"{base}/{record['id']}", headers=headers).json()["note"] == data["note"]
+    assert client.post(base, headers=headers, json=data).json() == record
+    data["note"]["assessment"] = "Changed synthetic provisional diagnosis"
+    assert client.post(base, headers=headers, json=data).status_code == 409
+    data["request_id"] = str(uuid4())
+    data["note"]["history"] = "x" * 10001
+    assert client.post(base, headers=headers, json=data).status_code == 422
+    assert client.get(f"{base}/{data['request_id']}", headers=headers).status_code == 404
+    # Explicit empty notes retain the hash of the legacy creation payload.
+    old = {**{k: v for k, v in data.items() if k != "note"}, "request_id": original["id"]}
+    old["note"] = {}
+    assert client.post(base, headers=headers, json=old).json() == original

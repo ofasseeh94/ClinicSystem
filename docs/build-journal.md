@@ -6,7 +6,7 @@ Update this document after every build step, including partial or blocked steps.
 
 ## Current position
 
-Last updated: 2026-10-13 (clinic timezone: Africa/Cairo).
+Last updated: 2026-10-17 (clinic timezone: Africa/Cairo).
 Repository: local Git repository at `G:/My Drive/Work/Pediatrics/ClinicSystem-AI`.
 Remote repository: [ofasseeh94/ClinicSystem](https://github.com/ofasseeh94/ClinicSystem), public.
 The initial source/documentation upload completed; `main` tracks `origin/main`. See Step 004.
@@ -444,6 +444,92 @@ Publication: [commit 9ee8c7d](https://github.com/ofasseeh94/ClinicSystem/commit/
 [Run 38386585714](https://github.com/ofasseeh94/ClinicSystem/actions/runs/38386585714) passed all checks,
 including 46 Python tests, frontend build and four browser workflows. Local readiness returned ok.
 A documentation-only follow-up records this result; source and migration were included together.
+
+## Step 012 — Make registration and visit documentation easy to access
+
+Date: 2026-10-17. Outcome: implemented and tested locally with synthetic data.
+Supersedes the navigation/initial-entry portions of Steps 006 and 007; their storage, identity,
+auditing and signed-record safeguards remain applicable. Unit 04A/M4 remains partial as in Step 011.
+
+### Purpose and implementation sequence
+
+1. Read the architecture/data/milestone guides and earlier journal entries; traced registration and
+   encounter entry. Previously staff had to register, select Encounters, start a visit, save metadata,
+   and only then reach the clinical note fields.
+2. Added a clinician/admin registration action, Register and start visit, that saves the existing
+   validated patient request and opens the full visit form immediately. Kept registration-only intact.
+   Existing records now expose Visit workspace in their patient header.
+3. Exposed complaint, history, examination, provisional diagnosis / assessment, plan and both review
+   selections together before the visit's first save. Retained draft/review/sign/addendum behavior.
+4. Extended encounter POST with an optional validated initial note, stored in the existing transaction
+   and audit snapshot at draft v1. Empty notes preserve legacy request hashes; nonempty notes are
+   included in replay hashes. No schema migration or historical-record rewrite was needed.
+5. Extended unsaved-change detection to initial note/review edits; disabled registration form inputs
+   during saves and consumed registration navigation intent once so tab revisits do not start another form.
+6. Regenerated API contracts, added integration/browser coverage, inspected desktop/mobile screenshots,
+   restarted the preview on 5174, and updated the guides and validation report.
+
+### Design decisions and modification guide
+
+Patient registration and visit creation remain separate saves. Registration success is real even if
+staff discard the visit; the UI does not claim a combined transaction. Initial visit metadata/note
+are one audited transaction. Incomplete notes are permitted as drafts; signing still requires all
+narrative sections and allergy/medication reviews. No clinical values or review states are inferred.
+Chief complaint uses existing `reason`; provisional diagnosis uses existing `note.assessment`.
+Measurements remain available immediately after first save, within the same workspace.
+
+Edit PatientForm/App for registration actions and intent; PatientOverview for patient shortcuts and
+one-time intent consumption; Encounters for note labels, initial state, dirty guards and requests.
+Keep stable stored field names when changing labels. Change API schemas/service with corresponding
+TypeScript/OpenAPI and retry tests. See the Unit 02 guide for clinical-record storage/recovery details.
+
+### Exact file changes
+
+- `README.md`
+- `apps/web/src/App.tsx`
+- `apps/web/src/Encounters.tsx`
+- `apps/web/src/PatientForm.tsx`
+- `apps/web/src/PatientOverview.tsx`
+- `docs/00-index.md`
+- `docs/api/openapi.yaml`
+- `docs/architecture/overview.md`
+- `docs/build-journal.md`
+- `docs/change-log.md`
+- `docs/data/data-dictionary.md`
+- `docs/milestones.md`
+- `docs/screenshots/README.md`
+- `docs/screenshots/visit-workspace-mobile.png`
+- `docs/screenshots/visit-workspace.png`
+- `docs/test-report.md`
+- `docs/units/02-encounters.md`
+- `docs/workflows/encounters.md`
+- `packages/shared-contracts/encounters.ts`
+- `packages/shared-contracts/openapi.json`
+- `services/api/src/clinic_api/encounters/schemas.py`
+- `services/api/src/clinic_api/encounters/service.py`
+- `tests/e2e/encounters.spec.ts`
+- `tests/integration/test_encounters.py`
+
+### Data, recovery, verification and limitations
+
+No migration or key/configuration changes. Existing IDs, background form versions, signed snapshots,
+audit history, database contents and encryption key are retained. Earlier migration checksums verified
+by the launcher. New encounter retries include the initial note; retry unchanged entries after network
+ambiguity. The older API rejects the new note field, so resolve pending create requests before downgrading.
+An unsaved visit can be discarded; the patient stays registered. Saved drafts follow the existing
+versioned-edit/cancellation workflow; signed errors require addenda. No destructive recovery performed.
+
+Actual checks: 47 Python tests passed against PostgreSQL; Ruff/structure and TypeScript/Vite passed;
+all five browser workflows passed (17.4 seconds). New browser coverage checks the complete initial note,
+persistence/reopening, mobile overflow and one-time navigation intent. Desktop/mobile screenshots
+inspected. Existing lifecycle/immutability/role tests also passed. Two existing upstream deprecation
+warnings remain. See test-report.md for environment and publication evidence.
+
+Limits/next prerequisites: this improves visit entry, with measurements after first save; it does not
+combine documents/investigations into the visit form, add diagnostic coding, prescriptions or clinical
+rules. Unsaved entries remain browser-memory-only. M4 reference selection and independent clinical
+validation, plus privacy/security/operations production gates, remain open. No new clinical claims.
+Publication commit and remote CI references will be appended when available.
 
 ## Template for every future build step
 

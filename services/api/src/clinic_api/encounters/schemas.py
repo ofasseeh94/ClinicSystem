@@ -50,6 +50,7 @@ class EncounterCreate(StrictModel):
     occurred_at: datetime
     reason: str = Field(min_length=1, max_length=1000)
     consent_context: str = Field(min_length=1, max_length=1000)
+    note: Note = Field(default_factory=Note)
 
     _time = field_validator("occurred_at")(past_time)
 

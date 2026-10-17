@@ -36,3 +36,7 @@ reported medication history with retained corrections. Identity review is separa
 rule approval; capability flags and API endpoints keep calculation/prescribing unavailable (ADR-005).
 No prescribing, growth reference calculations or vaccination recommendations exist. TLS/encryption,
 restricted DB role, external audit integrity, backup/restore, privacy review and clinical sign-off remain release gates.
+
+The registration-to-visit shortcut (Step 012) opens the complete narrative form directly. Patient
+registration remains one transaction; encounter creation atomically saves its optional initial note,
+immutable replay response and audit evidence in another. Existing signed-record invariants are unchanged.

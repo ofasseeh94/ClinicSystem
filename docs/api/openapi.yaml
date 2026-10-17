@@ -3639,6 +3639,8 @@ components:
           maxLength: 1000
           minLength: 1
           title: Consent Context
+        note:
+          $ref: '#/components/schemas/Note'
       additionalProperties: false
       type: object
       required:

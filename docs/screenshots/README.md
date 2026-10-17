@@ -1,4 +1,7 @@
-# Unit 01 visual verification
+# Visual verification
+
+2026-10-17 visit workflow: [saved desktop note](visit-workspace.png),
+[single mobile visit form](visit-workspace-mobile.png). Synthetic records only.
 
 Unit 04A evidence: [catalog versions/review state](unit-04-catalog.png),
 [mobile reported history/corrections](unit-04-history-mobile.png). Fictional records have no clinical

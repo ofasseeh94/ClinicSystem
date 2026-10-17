@@ -20,7 +20,7 @@ test('dated visit, measurements, review, signature, immutable note and signed co
   await page.getByLabel('Consent context',{exact:true}).fill('Synthetic guardian present; context recorded');
   await expect(page.getByRole('tab',{name:'Overview',exact:true})).toBeDisabled();
   await page.getByRole('button',{name:'Create draft visit'}).click();
-  for (const label of ['History','Examination','Assessment','Plan']) await page.getByLabel(label,{exact:true}).fill(`Synthetic ${label.toLowerCase()}`);
+  for (const label of ['History','Examination','Provisional diagnosis / assessment','Plan']) await page.getByLabel(label,{exact:true}).fill(`Synthetic ${label.toLowerCase()}`);
   await page.getByLabel('Allergy review',{exact:true}).selectOption('reviewed');
   await page.getByLabel('Medication review',{exact:true}).selectOption('reviewed');
   await page.getByRole('button',{name:'Add measurement',exact:true}).click();
@@ -52,4 +52,39 @@ test('dated visit, measurements, review, signature, immutable note and signed co
   await page.setViewportSize({width:390,height:844});
   await page.screenshot({path:'docs/screenshots/unit-02-mobile.png',fullPage:true});
   await expect(page.getByLabel('Weight (kg)',{exact:true})).toHaveValue('12.3');
+});
+
+
+test('registration opens one visit form and saves the initial clinical note', async ({ page }) => {
+  const suffix = Date.now().toString().slice(-8);
+  await page.goto('/');
+  await page.getByLabel('Development access key').fill(token!);
+  await page.getByRole('button', {name:'Open registry'}).click();
+  await page.getByRole('button', {name:'+ Register patient',exact:true}).click();
+  await page.getByLabel('English name').fill(`Synthetic Consultation ${suffix}`);
+  await page.getByLabel('Date of birth', {exact:true}).fill('2024-01-01');
+  await page.getByLabel('Guardian full name').fill('Synthetic Guardian');
+  await page.getByLabel('Guardian phone').fill(`+2012${suffix}`);
+  await page.getByRole('button', {name:'Register and start visit',exact:true}).click();
+  await expect(page.getByRole('heading', {name:'Document a new visit'})).toBeVisible();
+  await expect(page.getByRole('tab', {name:'Encounters',exact:true})).toHaveAttribute('aria-selected','true');
+  await page.getByLabel('Visit reason', {exact:true}).fill('Synthetic chief complaint');
+  await page.getByLabel('Consent context', {exact:true}).fill('Synthetic guardian context');
+  for (const label of ['History','Examination','Provisional diagnosis / assessment','Plan']) {
+    await page.getByRole('textbox', {name:label,exact:true}).fill(`Synthetic ${label}`);
+  }
+  await expect(page.getByRole('tab', {name:'Overview',exact:true})).toBeDisabled();
+  await page.setViewportSize({width:390,height:844});
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.screenshot({path:'docs/screenshots/visit-workspace-mobile.png',fullPage:true});
+  await page.getByRole('button', {name:'Create draft visit',exact:true}).click();
+  await expect(page.getByRole('textbox', {name:'Provisional diagnosis / assessment',exact:true})).toHaveValue('Synthetic Provisional diagnosis / assessment');
+  await expect(page.getByRole('button', {name:'Save draft',exact:true})).toBeDisabled();
+  await page.setViewportSize({width:1280,height:900});
+  await page.screenshot({path:'docs/screenshots/visit-workspace.png',fullPage:true});
+  await page.getByRole('tab', {name:'Overview',exact:true}).click();
+  await page.getByRole('button', {name:'Visit workspace',exact:true}).click();
+  await expect(page.getByRole('heading', {name:'Document a new visit'})).toHaveCount(0);
+  await page.getByRole('button', {name:/Synthetic chief complaint/}).click();
+  await expect(page.getByRole('textbox', {name:'Examination',exact:true})).toHaveValue('Synthetic Examination');
 });

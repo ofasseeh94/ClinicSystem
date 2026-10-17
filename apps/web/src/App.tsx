@@ -9,6 +9,7 @@ export function App() {
   const [result, setResult] = useState<SearchResponse>({ items: [], total: 0, page: 1, page_size: 20 });
   const [query, setQuery] = useState(''); const [patient, setPatient] = useState<PatientRecord>();
   const [view, setView] = useState<'registry' | 'create' | 'record' | 'edit'>('registry');
+  const [startVisit, setStartVisit] = useState(false);
   const [encounterDirty, setEncounterDirty] = useState(false);
   const [error, setError] = useState(''); const [notice, setNotice] = useState(''); const [loading, setLoading] = useState(false);
   function logout() { setToken(''); setKey(''); setSession(undefined); setPatient(undefined); setResult({ items: [], total: 0, page: 1, page_size: 20 }); setQuery(''); setError(''); setNotice(''); setView('registry'); }
@@ -32,10 +33,10 @@ export function App() {
   }
   async function open(id: string) {
     setLoading(true); setError(''); setNotice('');
-    try { const p = await request<PatientRecord>(token, `/v1/patients/${id}`); setPatient(p); setView('record'); }
+    try { const p = await request<PatientRecord>(token, `/v1/patients/${id}`); setPatient(p); setStartVisit(false); setView('record'); }
     catch (e) { setError(e instanceof RequestError ? e.message : 'Unable to open the record.'); } finally { setLoading(false); }
   }
-  function saved(p: PatientRecord) { setPatient(p); setView('record'); setNotice('Saved successfully.'); }
+  function saved(p: PatientRecord, startVisit = false) { setStartVisit(startVisit); setPatient(p); setView('record'); setNotice('Saved successfully.'); }
   async function back() { if (encounterDirty && !window.confirm('Discard unsaved record entries and return to the registry?')) return; setView('registry'); setPatient(undefined); await search(); }
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, [view, patient?.patient_id]);
   const date = dateLabel(new Date().toISOString());
@@ -57,7 +58,7 @@ export function App() {
             {result.items.length === 0 && <div className="empty-state"><span className="empty-symbol">◎</span><h3>{query ? 'No matching patients' : 'Your patient registry starts here'}</h3><p>{query ? 'Try another name, alias, clinic code, or guardian phone.' : 'Register the first fictional patient to explore this unit.'}</p></div>}
             <div className="pagination"><span>{result.total} records · Page {result.page}</span><div className="actions"><button className="secondary" disabled={result.page <= 1 || loading} onClick={() => search(undefined, result.page - 1)}>Previous</button><button className="secondary" disabled={result.page * result.page_size >= result.total || loading} onClick={() => search(undefined, result.page + 1)}>Next</button></div></div>
           </section><p className="workspace-note">Search results mask phone numbers. Complete contact details are available inside an authorized patient record.</p></>}
-        {(view === 'create' || view === 'edit') && <PatientForm key={view + (patient?.patient_id ?? '')} token={token} patient={view === 'edit' ? patient : undefined} saved={saved} cancel={() => setView(view === 'edit' ? 'record' : 'registry')} openCandidate={open} />}
-        {view === 'record' && patient && <PatientOverview key={patient.patient_id} token={token} patient={patient} onDirty={setEncounterDirty} saved={saved} back={back} edit={() => { setView('edit'); setNotice(''); }} />}
+        {(view === 'create' || view === 'edit') && <PatientForm key={view + (patient?.patient_id ?? '')} canStartVisit={session.roles.some(r => ['admin','clinician'].includes(r))} token={token} patient={view === 'edit' ? patient : undefined} saved={saved} cancel={() => setView(view === 'edit' ? 'record' : 'registry')} openCandidate={open} />}
+        {view === 'record' && patient && <PatientOverview key={patient.patient_id} token={token} patient={patient} startVisit={startVisit} onDirty={setEncounterDirty} saved={saved} back={back} edit={() => { setView('edit'); setNotice(''); }} />}
       </main></div></div>;
 }

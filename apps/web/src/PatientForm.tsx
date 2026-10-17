@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent, type MouseEvent } from 'react';
 import type { ApiProblem, FormDefinition, PatientInput, PatientRecord, PatientSummary } from '../../../packages/shared-contracts/registry';
 import { request, RequestError } from './api';
 import { BackgroundFields } from './BackgroundFields';
@@ -11,8 +11,8 @@ function toInput(p: PatientRecord): PatientInput {
     growth_reference_sex: p.growth_reference_sex, guardian: p.guardian, aliases: p.aliases,
     allergy_review_status: p.allergy_review_status, allergies: p.allergies };
 }
-interface Props { token: string; patient?: PatientRecord; saved: (patient: PatientRecord) => void; cancel: () => void; openCandidate: (id: string) => void }
-export function PatientForm({ token, patient, saved, cancel, openCandidate }: Props) {
+interface Props { token: string; patient?: PatientRecord; saved: (patient: PatientRecord, startVisit?: boolean) => void; canStartVisit?: boolean; cancel: () => void; openCandidate: (id: string) => void }
+export function PatientForm({ token, patient, saved, cancel, openCandidate, canStartVisit }: Props) {
   const [data, setData] = useState<PatientInput>(patient ? toInput(patient) : empty);
   const [aliases, setAliases] = useState(patient?.aliases.join(', ') ?? '');
   const [expanded, setExpanded] = useState(false);
@@ -29,7 +29,7 @@ export function PatientForm({ token, patient, saved, cancel, openCandidate }: Pr
     return () => { active = false; };
   }, [token]);
   function field<K extends keyof PatientInput>(key: K, value: PatientInput[K]) { setData({ ...data, [key]: value }); }
-  async function submit(e: FormEvent) {
+  async function submit(e: FormEvent, startVisit = false) {
     e.preventDefault();
     if (!data.name_ar.trim() && !data.name_en.trim()) { setError({ title: 'name_required', status: 422, detail: 'Enter at least one Arabic or English name.' }); return; }
     setSaving(true); setError(undefined);
@@ -43,7 +43,7 @@ export function PatientForm({ token, patient, saved, cancel, openCandidate }: Pr
       const result = await request<PatientRecord>(token, patient ? `/v1/patients/${patient.patient_id}` : '/v1/patients', {
         method: patient ? 'PATCH' : 'POST', body: payload,
         headers: patient ? { 'If-Match': `"${patient.version}"` } : { 'Idempotency-Key': retry.current.key },
-      }); saved(result);
+      }); saved(result, startVisit);
     } catch (e) {
       const problem = e instanceof RequestError ? e.problem : { title: 'unexpected', status: 0, detail: 'Unable to save. Please try again.' };
       setError(problem); if (problem.candidates) setCandidates(problem.candidates);
@@ -51,8 +51,8 @@ export function PatientForm({ token, patient, saved, cancel, openCandidate }: Pr
   }
   return <section className="panel form-panel"><div className="panel-heading"><div><p className="eyebrow">PATIENT REGISTRY</p>
     <h2>{patient ? 'Correct patient details' : 'Register a patient'}</h2><p className="muted">{patient ? 'Changes keep their history and require a correction reason.' : 'Start with the essentials. Add medical background when available.'}</p></div>
-    <button type="button" className="secondary" onClick={cancel}>Cancel</button></div>
-    <form onSubmit={submit}>{error && <div className="notice error" role="alert"><strong>{error.detail}</strong>
+    <button type="button" className="secondary" disabled={saving} onClick={cancel}>Cancel</button></div>
+    <form onSubmit={e => submit(e)}><fieldset disabled={saving}>{error && <div className="notice error" role="alert"><strong>{error.detail}</strong>
       {error.fields && <p>Fields to check: {error.fields.map(f => f.replace('body.', '').replaceAll('_', ' ')).join(', ')}</p>}
       {error.status === 412 && <button type="button" className="secondary" onClick={() => patient && openCandidate(patient.patient_id)}>Reload current record</button>}</div>}
     {candidates.length > 0 && <div className="notice duplicate"><h3>Possible existing records</h3><p>Open an existing record, or explain why this is a separate patient. Records are never merged automatically.</p>
@@ -82,6 +82,6 @@ export function PatientForm({ token, patient, saved, cancel, openCandidate }: Pr
     {!patient && <div className="expandable"><button type="button" className="expand-button" aria-expanded={expanded} onClick={() => setExpanded(!expanded)}><span><strong>Medical & birth background</strong><small>Optional · Versioned form · Unknown answers allowed</small></span><span>{expanded ? '−' : '+'}</span></button>
       {expanded && (definition ? <BackgroundFields definition={definition} answers={answers} onChange={setAnswers} /> : <p role="status">Background form unavailable. You can save the essential details and add history later.</p>)}</div>}
     {patient && <label>Correction reason<textarea required minLength={5} maxLength={500} value={reason} onChange={e => setReason(e.target.value)} /></label>}
-    <div className="form-footer"><p className="hint">{patient ? 'Previous details stay in the restricted audit history.' : 'A unique clinic code is assigned after saving.'}</p><button className="primary" type="submit" disabled={saving}>{saving ? 'Saving…' : patient ? 'Save correction' : 'Register patient'}</button></div>
-    </form></section>;
+    <div className="form-footer"><p className="hint">{patient ? 'Previous details stay in the restricted audit history.' : 'A unique clinic code is assigned after saving.'}</p>{!patient && canStartVisit && <button className="primary" type="button" disabled={saving} onClick={(e: MouseEvent<HTMLButtonElement>) => { const form = e.currentTarget.form!; if (form.reportValidity()) void submit(e, true); }}>Register and start visit</button>}<button className="secondary" type="submit" disabled={saving}>{saving ? 'Saving…' : patient ? 'Save correction' : 'Register patient'}</button></div>
+    </fieldset></form></section>;
 }

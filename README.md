@@ -8,7 +8,9 @@ Unit 04A adds reported medication history/corrections and a versioned catalog id
 foundation. Dose calculations and prescribing remain disabled; baseline M4 is not yet complete.
 Register patients and guardians, search Arabic/English names and aliases, review duplicate candidates,
 reopen an overview, correct identity details with a reason, and append versioned medical/birth background.
-Unknown allergy history remains explicit. Open Encounters for dated visits, notes, raw measurements,
+Unknown allergy history remains explicit. Choose **Register and start visit** to go directly to a
+single visit form: chief complaint, history, examination, provisional diagnosis / assessment and plan.
+Existing records have a **Visit workspace** shortcut. Open Encounters for dated visits, notes, raw measurements,
 review/signing, cancellation and immutable signed addenda. Later clinical modules remain planned.
 Documents supports encrypted PDF/PNG/JPEG attachments, attributed source metadata, controlled retrieval
 and withdrawal. Investigations tracks requests, reported results and immutable corrections.

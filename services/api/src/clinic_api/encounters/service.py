@@ -6,13 +6,17 @@ from psycopg.types.json import Jsonb
 
 from ..errors import Problem
 from ..registry import audit
-from .schemas import EncounterRecord, Note
+from .schemas import EncounterCreate, EncounterRecord, Note
 
 FIELDS = tuple(EncounterRecord.model_fields)
 
 
 def digest(data):
-    return hashlib.sha256(audit.canonical(data.model_dump(mode="json")).encode()).hexdigest()
+    payload = data.model_dump(mode="json")
+    # Preserve replay hashes created before initial notes were supported.
+    if isinstance(data, EncounterCreate) and data.note == Note():
+        payload.pop("note")
+    return hashlib.sha256(audit.canonical(payload).encode()).hexdigest()
 
 
 def read(conn, principal, patient_id, encounter_id):
@@ -80,7 +84,7 @@ def create(conn, principal, patient_id, data):
         reason=data.reason,
         consent_context=data.consent_context,
         birth_context=birth,
-        note=Note(),
+        note=data.note,
         measurements=[],
         status="draft",
         version=1,
@@ -105,7 +109,7 @@ def create(conn, principal, patient_id, data):
             data.reason,
             data.consent_context,
             Jsonb(birth),
-            Jsonb(Note().model_dump()),
+            Jsonb(data.note.model_dump()),
             principal.actor_id,
             principal.actor_id,
             principal.actor_id,

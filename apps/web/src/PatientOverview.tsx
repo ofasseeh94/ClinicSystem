@@ -8,9 +8,10 @@ import { Documents } from './Documents';
 import { Investigations } from './Investigations';
 import { Medications } from './Medications';
 const modules = ['Overview', 'Encounters', 'Growth', 'Vaccines', 'Development', 'Medications', 'Investigations', 'Documents', 'Tasks'];
-interface Props { token: string; patient: PatientRecord; edit: () => void; back: () => void; saved: (p: PatientRecord) => void; onDirty: (dirty: boolean) => void }
-export function PatientOverview({ token, patient, edit, back, saved, onDirty }: Props) {
-  const [tab, setTab] = useState('Overview');
+interface Props { startVisit?: boolean; token: string; patient: PatientRecord; edit: () => void; back: () => void; saved: (p: PatientRecord) => void; onDirty: (dirty: boolean) => void }
+export function PatientOverview({ token, patient, edit, back, saved, onDirty, startVisit = false }: Props) {
+  const [tab, setTab] = useState(startVisit ? 'Encounters' : 'Overview');
+  const [visitOpened, setVisitOpened] = useState(false);
   const [encounterDirty, setEncounterDirty] = useState(false);
   useEffect(() => { onDirty(encounterDirty); return () => onDirty(false); }, [encounterDirty, onDirty]);
   const [adding, setAdding] = useState(false);
@@ -37,12 +38,12 @@ export function PatientOverview({ token, patient, edit, back, saved, onDirty }: 
       <div className="patient-title"><p className="eyebrow">{patient.clinic_code} · ACTIVE RECORD</p><h2 dir="auto">{patient.name_en || patient.name_ar}</h2>
         {patient.name_ar && patient.name_en && <p dir="rtl" lang="ar" className="arabic-name">{patient.name_ar}</p>}
         <p className="muted">{age(patient.dob, patient.dob_precision)} · {patient.dob} · Growth reference: {patient.growth_reference_sex}</p></div>
-      <button className="secondary" disabled={encounterDirty} onClick={edit}>Correct details</button></section>
+      <button className="primary" disabled={encounterDirty} onClick={() => setTab('Encounters')}>Visit workspace</button><button className="secondary" disabled={encounterDirty} onClick={edit}>Correct details</button></section>
     <div className={`allergy-banner ${allergy === 'no_known' ? 'reviewed' : 'needs-review'}`}><strong>Allergy review: {allergy === 'no_known' ? 'no known allergies' : statusLabel(allergy)}</strong>
       <span>{allergy === 'known' ? patient.allergies.map(a => `${a.substance}: ${a.reaction}`).join(' · ') : allergy === 'no_known' ? 'Recorded as reviewed. Check again at the next encounter.' : 'Confirm allergy history before clinical decisions.'}</span></div>
     <div className="record-tabs" role="tablist" aria-label="Patient sections">{modules.map(m => <button key={m} role="tab" id={`tab-${m}`} aria-controls={`panel-${m}`} aria-selected={tab === m} disabled={encounterDirty && tab !== m} onClick={() => setTab(m)}>{m}</button>)}</div>
     <section role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
-      {tab === 'Medications' ? <Medications token={token} patientId={patient.patient_id} onDirty={setEncounterDirty} /> : tab === 'Documents' ? <Documents token={token} patientId={patient.patient_id} onDirty={setEncounterDirty} /> : tab === 'Investigations' ? <Investigations token={token} patientId={patient.patient_id} onDirty={setEncounterDirty} /> : tab === 'Encounters' ? <Encounters token={token} patientId={patient.patient_id} onDirty={setEncounterDirty} /> : tab !== 'Overview' ? <div className="panel empty-state"><span className="empty-symbol">○</span><h3>{tab} will be built in a later unit</h3><p>This section has no records or clinical calculations yet.</p><p className="muted">Patient identity and saved background remain available in Overview.</p></div> : <div className="overview-grid">
+      {tab === 'Medications' ? <Medications token={token} patientId={patient.patient_id} onDirty={setEncounterDirty} /> : tab === 'Documents' ? <Documents token={token} patientId={patient.patient_id} onDirty={setEncounterDirty} /> : tab === 'Investigations' ? <Investigations token={token} patientId={patient.patient_id} onDirty={setEncounterDirty} /> : tab === 'Encounters' ? <Encounters onOpened={() => setVisitOpened(true)} startVisit={startVisit && !visitOpened} token={token} patientId={patient.patient_id} onDirty={setEncounterDirty} /> : tab !== 'Overview' ? <div className="panel empty-state"><span className="empty-symbol">○</span><h3>{tab} will be built in a later unit</h3><p>This section has no records or clinical calculations yet.</p><p className="muted">Patient identity and saved background remain available in Overview.</p></div> : <div className="overview-grid">
         <section className="panel"><h3>Identity & contact</h3><dl><dt>Date of birth</dt><dd>{patient.dob} <span className="chip">{patient.dob_precision}</span></dd><dt>Birth date source</dt><dd>{patient.dob_source}</dd>
           <dt>Guardian</dt><dd dir="auto">{patient.guardian.name}</dd><dt>Phone</dt><dd>{patient.guardian.phone_e164}</dd><dt>Relationship</dt><dd>{patient.guardian.relation}</dd>
           <dt>Guardian authority</dt><dd><span className="chip">{patient.contact_authority}</span></dd><dt>Aliases</dt><dd dir="auto">{patient.aliases.join(', ') || 'Not recorded'}</dd></dl>

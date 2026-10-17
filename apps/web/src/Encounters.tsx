@@ -17,15 +17,19 @@ function measurementAge(m: Measurement, v: Encounter) {
   const observed = Date.parse(`${get('year')}-${get('month')}-${get('day')}T00:00:00Z`);
   return `${Math.round((observed - Date.parse(v.birth_context.dob+'T00:00:00Z')) / 86400000)} days old at measurement`;
 }
+const emptyNote: EncounterNote = {history:'', examination:'', assessment:'', plan:'', allergy_review:'not_reviewed', medication_review:'not_reviewed'};
+const noteLabels = {history:'History', examination:'Examination', assessment:'Provisional diagnosis / assessment', plan:'Plan'};
 const sections = ['history', 'examination', 'assessment', 'plan'] as const;
-export function Encounters({ token, patientId, onDirty }: { token: string; patientId: string; onDirty: (dirty: boolean) => void }) {
+export function Encounters({ token, patientId, onDirty, startVisit = false, onOpened }: { onOpened?: () => void; startVisit?: boolean; token: string; patientId: string; onDirty: (dirty: boolean) => void }) {
+  useEffect(() => { onOpened?.(); }, []);
   const base = `/v1/patients/${patientId}/encounters`;
   const [page, setPage] = useState(1);
   const [timeline, setTimeline] = useState<EncounterPage>();
   const [visit, setVisit] = useState<Encounter>();
   const [note, setNote] = useState<EncounterNote>();
   const [measurements, setMeasurements] = useState<Measurement[]>([]);
-  const [creating, setCreating] = useState(false);
+  const [creating, setCreating] = useState(startVisit);
+  const [initialNote, setInitialNote] = useState<EncounterNote>(emptyNote);
   const [when, setWhen] = useState(localInput());
   const [reason, setReason] = useState('');
   const [consent, setConsent] = useState('');
@@ -37,7 +41,7 @@ export function Encounters({ token, patientId, onDirty }: { token: string; patie
   const [busy, setBusy] = useState(false);
   const [canWrite, setCanWrite] = useState(false);
   const dirty = !!visit && (JSON.stringify(note) !== JSON.stringify(visit.note) || JSON.stringify(measurements) !== JSON.stringify(visit.measurements));
-  const unsaved = dirty || (creating && !!(reason || consent)) || !!addendum;
+  const unsaved = dirty || (creating && (!!(reason || consent) || JSON.stringify(initialNote) !== JSON.stringify(emptyNote))) || !!addendum;
   useEffect(() => { onDirty(unsaved); return () => onDirty(false); }, [unsaved, onDirty]);
   useEffect(() => {
     function warn(e: BeforeUnloadEvent) { if (unsaved) { e.preventDefault(); e.returnValue = ''; } }
@@ -56,23 +60,23 @@ export function Encounters({ token, patientId, onDirty }: { token: string; patie
     catch (e) { setError(e instanceof Error ? e.message : 'Unable to save visit.'); }
     finally { setBusy(false); }
   }
-  function start(e: FormEvent) { e.preventDefault(); void perform(() => request<Encounter>(token, base, {method:'POST',body:JSON.stringify({request_id:key,occurred_at:iso(when),reason,consent_context:consent})})); }
+  function start(e: FormEvent) { e.preventDefault(); void perform(() => request<Encounter>(token, base, {method:'POST',body:JSON.stringify({request_id:key,occurred_at:iso(when),reason,consent_context:consent,note:initialNote})})); }
   function save(e: FormEvent) { e.preventDefault(); void perform(() => request<Encounter>(token, `${base}/${visit!.id}`, {method:'PUT',headers:{'If-Match':`"${visit!.version}"`},body:JSON.stringify({note,measurements,audit_reason:changeReason})})); }
   function transition(status: Encounter['status']) { void perform(() => request<Encounter>(token, `${base}/${visit!.id}/status`, {method:'POST',headers:{'If-Match':`"${visit!.version}"`},body:JSON.stringify({status,reason:changeReason})})); }
   function append(e: FormEvent) { e.preventDefault(); void perform(() => request<Encounter>(token, `${base}/${visit!.id}/addenda`, {method:'POST',body:JSON.stringify({request_id:addendumKey,reason:changeReason,content:addendum})})); }
   const editable = canWrite && visit?.status === 'draft';
   function editMeasurement(index: number, changes: Partial<Measurement>) { setMeasurements(old => old.map((m,i) => i === index ? {...m,...changes} : m)); }
   return <div className="encounter-layout">
-    <section className="panel"><div className="panel-heading compact"><h3>Visit timeline</h3><button className="primary" disabled={busy || unsaved || !canWrite} onClick={() => {setCreating(true);setVisit(undefined);setReason('');setConsent('');setWhen(localInput());setKey(crypto.randomUUID());setError('');}}>Start visit</button></div>
+    <section className="panel"><div className="panel-heading compact"><h3>Visit timeline</h3><button className="primary" disabled={busy || unsaved || !canWrite} onClick={() => {setCreating(true);setInitialNote(emptyNote);setVisit(undefined);setReason('');setConsent('');setWhen(localInput());setKey(crypto.randomUUID());setError('');}}>Start visit</button></div>
       {!timeline && !error && <p>Loading visits…</p>}{timeline?.total === 0 && <p className="muted">No encounters recorded yet.</p>}
       {timeline?.items.map(v => <button className={`visit-item ${visit?.id === v.id ? 'selected' : ''}`} key={v.id} disabled={busy || unsaved} onClick={() => void perform(() => request<Encounter>(token, `${base}/${v.id}`))}><strong dir="auto">{v.reason}</strong><span>{dateLabel(v.occurred_at)} · {statusLabel(v.status)}</span></button>)}
       {timeline && timeline.total > 20 && <div className="actions"><button disabled={page === 1 || dirty || busy} onClick={() => setPage(page-1)}>Previous</button><span>Page {page}</span><button disabled={page*20 >= timeline.total || dirty || busy} onClick={() => setPage(page+1)}>Next</button></div>}
     </section>
     <section className="panel encounter-detail">{error && <p role="alert" className="notice error">{error} Unsaved entries remain here. Reload the visit to review its latest version.</p>}
-      {creating ? <form onSubmit={start}><fieldset disabled={busy}><h3>Start a dated visit</h3><label>Visit date and time (device local time)<input type="datetime-local" required value={when} onChange={e => {setWhen(e.target.value);setKey(crypto.randomUUID());}}/></label><label>Visit reason<textarea required maxLength={1000} value={reason} onChange={e => {setReason(e.target.value);setKey(crypto.randomUUID());}}/></label><label>Consent context<textarea required maxLength={1000} value={consent} onChange={e => {setConsent(e.target.value);setKey(crypto.randomUUID());}}/></label><p className="hint">Record the actual context and limitations. This does not verify guardian authority.</p><button className="primary" disabled={busy}>Create draft visit</button> <button type="button" className="secondary" disabled={busy} onClick={() => {setCreating(false);setReason('');setConsent('');setError('');}}>Discard new visit</button></fieldset></form> : visit && note ? <>
+      {creating ? <form onSubmit={start}><fieldset disabled={busy}><h3>Document a new visit</h3><label>Visit date and time (device local time)<input type="datetime-local" required value={when} onChange={e => {setWhen(e.target.value);setKey(crypto.randomUUID());}}/></label><label>Chief complaint / visit reason<textarea aria-label="Visit reason" required maxLength={1000} value={reason} onChange={e => {setReason(e.target.value);setKey(crypto.randomUUID());}}/></label><label>Consent context<textarea required maxLength={1000} value={consent} onChange={e => {setConsent(e.target.value);setKey(crypto.randomUUID());}}/></label><p className="hint">Record the actual context and limitations. This does not verify guardian authority.</p><h3>Clinical note</h3><p className="hint">Save an incomplete draft and continue later; signing requires a completed note and reviews.</p>{sections.map(s => <label key={s}>{noteLabels[s]}<textarea aria-label={noteLabels[s]} rows={4} maxLength={10000} value={initialNote[s]} onChange={e => {setInitialNote({...initialNote,[s]:e.target.value});setKey(crypto.randomUUID());}}/></label>)}<div className="field-grid">{(['allergy_review','medication_review'] as const).map(s => <label key={s}>{fieldLabel(s)}<select aria-label={fieldLabel(s)} value={initialNote[s]} onChange={e => {setInitialNote({...initialNote,[s]:e.target.value as EncounterNote[typeof s]});setKey(crypto.randomUUID());}}><option value="not_reviewed">Not reviewed</option><option value="reviewed">Reviewed</option></select></label>)}</div><button className="primary" disabled={busy}>Create draft visit</button> <button type="button" className="secondary" disabled={busy} onClick={() => {setCreating(false);setInitialNote(emptyNote);setReason('');setConsent('');setError('');}}>Discard new visit</button></fieldset></form> : visit && note ? <>
         <div className="panel-heading compact"><h3 dir="auto">{visit.reason}</h3><span className="chip">{statusLabel(visit.status)} · v{visit.version}</span></div><p className="muted">{dateLabel(visit.occurred_at)} · {visit.created_by}</p>
         <p className="source-note">Birth context: {visit.birth_context.dob} ({visit.birth_context.precision}) · {visit.birth_context.age_days === null ? 'Exact age unavailable' : `${visit.birth_context.age_days} days old at visit`} · Patient version {visit.birth_context.patient_version}</p><p className="hint" dir="auto">Consent context: {visit.consent_context}</p>
-        <form onSubmit={save}><fieldset disabled={!editable || busy}><legend className="sr-only">Encounter note</legend>{sections.map(s => <label key={s}>{fieldLabel(s)}<textarea rows={4} maxLength={10000} value={note[s]} onChange={e => setNote({...note,[s]:e.target.value})}/></label>)}
+        <form onSubmit={save}><fieldset disabled={!editable || busy}><legend className="sr-only">Encounter note</legend>{sections.map(s => <label key={s}>{noteLabels[s]}<textarea aria-label={noteLabels[s]} rows={4} maxLength={10000} value={note[s]} onChange={e => setNote({...note,[s]:e.target.value})}/></label>)}
           <div className="field-grid">{(['allergy_review','medication_review'] as const).map(s => <label key={s}>{fieldLabel(s)}<select aria-label={fieldLabel(s)} value={note[s]} onChange={e => setNote({...note,[s]:e.target.value as EncounterNote[typeof s]})}><option value="not_reviewed">Not reviewed</option><option value="reviewed">Reviewed</option></select></label>)}</div>
           <h3 className="measurement-heading">Dated measurements</h3><p className="hint">Raw observations only. No growth percentiles, corrected age or clinical interpretation.</p>
           {measurements.map((m,i) => <div className="measurement-entry" key={i}><p className="source-note">{measurementAge(m, visit)}</p><div className="field-grid"><label>Measured at (device local time)<input type="datetime-local" required value={localInput(m.measured_at)} onChange={e => {if(e.target.value) editMeasurement(i,{measured_at:iso(e.target.value)});}}/></label>{(['weight_kg','length_cm','head_cm'] as const).map((s,j) => <label key={s}>{['Weight (kg)','Length / height (cm)','Head circumference (cm)'][j]}<input type="number" step="any" min="0.001" value={m[s] ?? ''} onChange={e => editMeasurement(i,{[s]:e.target.value === '' ? null : Number(e.target.value)})}/></label>)}

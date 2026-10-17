@@ -44,3 +44,10 @@ NICU and ventilation allow yes/no/unknown/not_recorded. These are recorded histo
 Add ordered migrations, regenerate OpenAPI and update schema-driven UI/contracts/tests together.
 Publish a new form version rather than editing v1/v2 or existing answers. No automatic patient merge,
 clinical-event deletion, verified guardian-consent model or source-verified rule data exists yet.
+
+## Visit form terminology (2026-10-17)
+
+Chief complaint / visit reason uses `encounters.reason`; provisional diagnosis / assessment uses
+`encounters.note.assessment`. Initial narrative notes and review states can be submitted on encounter
+creation; absence defaults to an empty note. Existing JSON structure, IDs, historical rows and migrations
+are unchanged. Registration and visit are separate transactions; initial note and visit are one transaction.

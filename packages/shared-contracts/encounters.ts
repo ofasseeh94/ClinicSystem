@@ -16,3 +16,9 @@ export interface Encounter {
   addenda: { id: string; reason: string; content: string; signed_by: string; signed_at: string }[];
 }
 export interface EncounterPage { items: Encounter[]; total: number; page: number }
+
+/** POST encounters: initial note is committed with the draft; measurements use the revision endpoint. */
+export interface EncounterCreate {
+  request_id: string; occurred_at: string; reason: string; consent_context: string;
+  note?: EncounterNote;
+}

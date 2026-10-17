@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-10-17 — Make visit documentation directly accessible
+
+Added Register and start visit and a patient-header Visit workspace shortcut. New visits now display
+chief complaint / visit reason, history, examination, provisional diagnosis / assessment, plan and
+review selections together before the first save. Initial notes are validated/audited in the encounter
+creation transaction; legacy empty-note retries remain compatible. Registration remains a separate save.
+No migrations, clinical rules or signed-record behavior changed. See build-journal Step 012.
+
 ## 2026-10-13 — Unit 04A: medication identity/history foundation
 
 Added migration 005, immutable catalog content versions with source metadata and independent identity
