@@ -12,7 +12,9 @@
 - Local servers restarted on 8000/5174; existing migration checksums verified. No migration added.
 - Environment: existing NTFS Python 3.14 / Node 24 / PostgreSQL 17; same commands as README.
   Two existing upstream TestClient/pypdf fixture deprecation warnings remain.
-- Remote CI: pending publication at the time of local verification; results will be linked when known.
+- PASS: remote [GitHub Actions run 39036230801](https://github.com/ofasseeh94/ClinicSystem/actions/runs/39036230801)
+  for [c5afd20](https://github.com/ofasseeh94/ClinicSystem/commit/c5afd205dfab8674a4d9ca5e5eb88f2673138847),
+  including backend checks, frontend build and all five browser workflows.
 
 Limits: registration saves before the visit form opens. A failed/discarded visit keeps the patient.
 Unsaved visit text stays in memory; measurements are added after first save in the same workspace.

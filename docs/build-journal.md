@@ -14,6 +14,7 @@ Current milestone: M4 / Unit 04A medication catalog/history foundation tested wi
 M0 local build blockers resolved. Baseline M4 drug safety remains partial
 pending reference selection, independent clinical rules and validation. No calculation or prescribing enabled.
 Registry, encounters, raw measurements, encrypted attachments and investigation records are implemented.
+Step 012 adds direct registration-to-visit navigation and a complete initial clinical-note form.
 Live malware scanning, later clinical modules and production gates remain open.
 
 ## Step 001 — Establish the repository foundation
@@ -529,7 +530,9 @@ Limits/next prerequisites: this improves visit entry, with measurements after fi
 combine documents/investigations into the visit form, add diagnostic coding, prescriptions or clinical
 rules. Unsaved entries remain browser-memory-only. M4 reference selection and independent clinical
 validation, plus privacy/security/operations production gates, remain open. No new clinical claims.
-Publication commit and remote CI references will be appended when available.
+Published implementation: [c5afd20](https://github.com/ofasseeh94/ClinicSystem/commit/c5afd205dfab8674a4d9ca5e5eb88f2673138847).
+Remote CI: PASS, [run 39036230801](https://github.com/ofasseeh94/ClinicSystem/actions/runs/39036230801)
+for c5afd20, including backend tests, frontend build and all five browser workflows.
 
 ## Template for every future build step
 
